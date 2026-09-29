@@ -1,0 +1,1111 @@
+source_repository: aim-repo/scgpt_dw_rerun-repo
+behavior_evidence: Checked against the archived implementation delivered for this
+  experiment family. Portable synthetic reference cases accompany the release; the
+  detailed source-history mapping is retained in the private research archive.
+behavior_reference_id: binned_depth_width_replacement
+defaults:
+  datamodule:
+    batch_size: 32
+    labels: cell_type
+    mask_pct: 0.15
+    mask_strategy: uniform
+    max_val_samples: 30000
+    n_bins: 50
+    normalize_expr_for_ranking: true
+    obs_value_filter: is_primary_data == True
+    selection: active
+  downstream:
+    clustering_method: leiden
+    coarse_k: 30
+    keep_artifacts: false
+    n_neighbors: 15
+    poll_interval_s: 30
+    resolution: 1.0
+    ridge_seed: 0
+  metadata:
+    pipeline: default
+    title: scgpt_dw_rerun
+    training_behavior: corrected
+  model:
+    bioformer:
+      chunk_size: 200
+      d_opm: 32
+      d_z: 128
+      gating: false
+      n_heads: 4
+      n_layers: 4
+      norm_first: true
+      pair_updates: true
+    context_length: 256
+    dropout: 0.2
+    freeze_encoder: true
+    from_ckpt: false
+    model_class: transformer
+    total_genes: 61497
+    transformer:
+      gating: false
+      n_heads: 4
+      norm_first: true
+  paths:
+    path_to_aimrepo: output/reproduction/aim-repo/scgpt_dw_rerun
+    path_to_celltypes: data/csvs/celltypes.csv
+    path_to_census: data/census/census_data/homo_sapiens
+    path_to_ckpt_dir: output/reproduction/checkpoints
+    path_to_ckpt_file: null
+    path_to_coarse_labels_dir: output/reproduction/coarse_labels
+    path_to_dataset_ids: data/csvs/dataset_ids.csv
+    path_to_finetune_dir: null
+    path_to_hvg: data/csvs/hvg.csv
+    path_to_means: data/csvs/means.csv
+  sweep_metadata:
+    max_steps: 100000
+    mode: parameter_count_depth
+    target_training_flops: 1.0e+18
+  trainer:
+    accumulate_grad: 1
+    check_val_every_n_epoch: null
+    checkpoint: true
+    compute_spearman: false
+    find_lr: false
+    lr_scheduler: warmup_constant
+    lr_warmup_steps: 500
+    max_time: null
+    n_epochs: 1000
+    precision: bf16-mixed
+    resume_dataloader: true
+    resume_training: false
+    training_state_checkpoint_steps: 100000
+    training_state_checkpoint: true
+runs:
+- source_run_hashes:
+  - 1476f583ad7f4fd98b7021e9
+  config:
+    metadata:
+      run_name: target_params_1e+06-depth_16-d_model_72-n_heads_4
+    model:
+      d_model: 72
+      lr: 0.0008528486404868921
+      transformer:
+        n_layers: 16
+    sweep_metadata:
+      actual_non_embedding_params: 1006848
+      flop_limited_steps: 12708351
+      forward_flops_per_example: 819671040.0
+      target_depth: 16
+      target_non_embedding_params: 1000000
+      training_flops_per_step: 78688419840.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - 7898083fc8834048ab348560
+  config:
+    metadata:
+      run_name: target_params_1e+06-depth_2-d_model_204-n_heads_4
+    model:
+      d_model: 204
+      lr: 0.000425563221436933
+      transformer:
+        n_layers: 2
+    sweep_metadata:
+      actual_non_embedding_params: 1002864
+      flop_limited_steps: 15261002
+      forward_flops_per_example: 682567680.0
+      target_depth: 2
+      target_non_embedding_params: 1000000
+      training_flops_per_step: 65526497280.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - ee32868b8bcc4967b1960173
+  config:
+    metadata:
+      run_name: target_params_1e+06-depth_24-d_model_60-n_heads_4
+    model:
+      d_model: 60
+      lr: 0.000976652853058689
+      transformer:
+        n_layers: 24
+    sweep_metadata:
+      actual_non_embedding_params: 1051200
+      flop_limited_steps: 11397406
+      forward_flops_per_example: 913950720.0
+      target_depth: 24
+      target_non_embedding_params: 1000000
+      training_flops_per_step: 87739269120.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - ab2b6eceab104ab3935a1ac4
+  config:
+    metadata:
+      run_name: target_params_1e+06-depth_32-d_model_52-n_heads_4
+    model:
+      d_model: 52
+      lr: 0.001075246207429664
+      transformer:
+        n_layers: 32
+    sweep_metadata:
+      actual_non_embedding_params: 1054976
+      flop_limited_steps: 10715977
+      forward_flops_per_example: 972068864.0
+      target_depth: 32
+      target_non_embedding_params: 1000000
+      training_flops_per_step: 93318610944.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - 9aa81f5009674547a24714da
+  config:
+    metadata:
+      run_name: target_params_1e+06-depth_4-d_model_144-n_heads_4
+    model:
+      d_model: 144
+      lr: 0.0005365374559433865
+      transformer:
+        n_layers: 4
+    sweep_metadata:
+      actual_non_embedding_params: 1001088
+      flop_limited_steps: 15038328
+      forward_flops_per_example: 692674560.0
+      target_depth: 4
+      target_non_embedding_params: 1000000
+      training_flops_per_step: 66496757760.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - c918d8cde4fe4ed1ad34f34f
+  config:
+    metadata:
+      run_name: target_params_1e+06-depth_64-d_model_36-n_heads_4
+    model:
+      d_model: 36
+      lr: 0.0013556384470893071
+      transformer:
+        n_layers: 64
+    sweep_metadata:
+      actual_non_embedding_params: 1018368
+      flop_limited_steps: 9336996
+      forward_flops_per_example: 1115633664.0
+      target_depth: 64
+      target_non_embedding_params: 1000000
+      training_flops_per_step: 107100831744.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - 059377436b5a4b9db3cc8bbe
+  config:
+    metadata:
+      run_name: target_params_1e+06-depth_8-d_model_100-n_heads_4
+    model:
+      d_model: 100
+      lr: 0.000676450471114932
+      transformer:
+        n_layers: 8
+    sweep_metadata:
+      actual_non_embedding_params: 968000
+      flop_limited_steps: 14533219
+      forward_flops_per_example: 716748800.0
+      target_depth: 8
+      target_non_embedding_params: 1000000
+      training_flops_per_step: 68807884800.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - 0dad1c53000e415c80f7d37e
+  config:
+    metadata:
+      run_name: target_params_1e+07-depth_16-d_model_228-n_heads_4
+    model:
+      d_model: 228
+      lr: 0.0003141684285609925
+      transformer:
+        n_layers: 16
+    sweep_metadata:
+      actual_non_embedding_params: 10017408
+      flop_limited_steps: 1694667
+      forward_flops_per_example: 6146734080.0
+      target_depth: 16
+      target_non_embedding_params: 10000000
+      training_flops_per_step: 590086471680.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - fe292b9fcc7e4a12a10eee46
+  config:
+    metadata:
+      run_name: target_params_1e+07-depth_2-d_model_644-n_heads_4
+    model:
+      d_model: 644
+      lr: 0.00015676700669402054
+      transformer:
+        n_layers: 2
+    sweep_metadata:
+      actual_non_embedding_params: 9966544
+      flop_limited_steps: 1715542
+      forward_flops_per_example: 6071941120.0
+      target_depth: 2
+      target_non_embedding_params: 10000000
+      training_flops_per_step: 582906347520.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - 97cd5f34b20a48219bf15282
+  config:
+    metadata:
+      run_name: target_params_1e+07-depth_24-d_model_184-n_heads_4
+    model:
+      d_model: 184
+      lr: 0.00035977485045867775
+      transformer:
+        n_layers: 24
+    sweep_metadata:
+      actual_non_embedding_params: 9794688
+      flop_limited_steps: 1679516
+      forward_flops_per_example: 6202183680.0
+      target_depth: 24
+      target_non_embedding_params: 10000000
+      training_flops_per_step: 595409633280.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - 0e32044d18a24eb4814b04c2
+  config:
+    metadata:
+      run_name: target_params_1e+07-depth_32-d_model_160-n_heads_4
+    model:
+      d_model: 160
+      lr: 0.0003960942132844222
+      transformer:
+        n_layers: 32
+    sweep_metadata:
+      actual_non_embedding_params: 9881600
+      flop_limited_steps: 1623822
+      forward_flops_per_example: 6414909440.0
+      target_depth: 32
+      target_non_embedding_params: 10000000
+      training_flops_per_step: 615831306240.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - 38374321a1674f9aa8b8c1c4
+  config:
+    metadata:
+      run_name: target_params_1e+07-depth_4-d_model_456-n_heads_4
+    model:
+      d_model: 456
+      lr: 0.00019764718074899394
+      transformer:
+        n_layers: 4
+    sweep_metadata:
+      actual_non_embedding_params: 9999168
+      flop_limited_steps: 1763005
+      forward_flops_per_example: 5908475904.0
+      target_depth: 4
+      target_non_embedding_params: 10000000
+      training_flops_per_step: 567213686784.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - 2aa4b93df47e4336beed7c5b
+  - 33f17a48846b47969686b7d3
+  config:
+    metadata:
+      run_name: target_params_1e+07-depth_64-d_model_112-n_heads_4
+    model:
+      d_model: 112
+      lr: 0.0004993838066925519
+      transformer:
+        n_layers: 64
+    sweep_metadata:
+      actual_non_embedding_params: 9705472
+      flop_limited_steps: 1524914
+      forward_flops_per_example: 6830989312.0
+      target_depth: 64
+      target_non_embedding_params: 10000000
+      training_flops_per_step: 655774973952.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - a3b6b593267c48f19b0847a5
+  config:
+    metadata:
+      run_name: target_params_1e+07-depth_8-d_model_324-n_heads_4
+    model:
+      d_model: 324
+      lr: 0.00024918768867145493
+      transformer:
+        n_layers: 8
+    sweep_metadata:
+      actual_non_embedding_params: 10103616
+      flop_limited_steps: 1735823
+      forward_flops_per_example: 6000998400.0
+      target_depth: 8
+      target_non_embedding_params: 10000000
+      training_flops_per_step: 576095846400.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - c35d7e9f38364503ae5b0454
+  config:
+    metadata:
+      run_name: target_params_1e+08-depth_16-d_model_720-n_heads_4
+    model:
+      d_model: 720
+      lr: 0.00011573190929651305
+      transformer:
+        n_layers: 16
+    sweep_metadata:
+      actual_non_embedding_params: 99648000
+      flop_limited_steps: 190162
+      forward_flops_per_example: 54778060800.0
+      target_depth: 16
+      target_non_embedding_params: 100000000
+      training_flops_per_step: 5258693836800.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - 6933720887b34e28ba81864d
+  config:
+    metadata:
+      run_name: target_params_1e+08-depth_2-d_model_2040-n_heads_4
+    model:
+      d_model: 2040
+      lr: 5.774910318805626e-05
+      transformer:
+        n_layers: 2
+    sweep_metadata:
+      actual_non_embedding_params: 99919200
+      flop_limited_steps: 177751
+      forward_flops_per_example: 58602639360.0
+      target_depth: 2
+      target_non_embedding_params: 100000000
+      training_flops_per_step: 5625853378560.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - 3ae4952ba9b047359a72ea58
+  config:
+    metadata:
+      run_name: target_params_1e+08-depth_24-d_model_588-n_heads_4
+    model:
+      d_model: 588
+      lr: 0.00013253219157368886
+      transformer:
+        n_layers: 24
+    sweep_metadata:
+      actual_non_embedding_params: 99715392
+      flop_limited_steps: 188663
+      forward_flops_per_example: 55213369344.0
+      target_depth: 24
+      target_non_embedding_params: 100000000
+      training_flops_per_step: 5300483457024.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - c2c5bc44d1c040d5a368a52d
+  config:
+    metadata:
+      run_name: target_params_1e+08-depth_32-d_model_508-n_heads_4
+    model:
+      d_model: 508
+      lr: 0.00014591135008273736
+      transformer:
+        n_layers: 32
+    sweep_metadata:
+      actual_non_embedding_params: 99259136
+      flop_limited_steps: 188040
+      forward_flops_per_example: 55396026368.0
+      target_depth: 32
+      target_non_embedding_params: 100000000
+      training_flops_per_step: 5318018531328.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - 353ff20a85ee4c7c9fa5393f
+  config:
+    metadata:
+      run_name: target_params_1e+08-depth_4-d_model_1444-n_heads_4
+    model:
+      d_model: 1444
+      lr: 7.280835219479523e-05
+      transformer:
+        n_layers: 4
+    sweep_metadata:
+      actual_non_embedding_params: 100144288
+      flop_limited_steps: 186134
+      forward_flops_per_example: 55963432960.0
+      target_depth: 4
+      target_non_embedding_params: 100000000
+      training_flops_per_step: 5372489564160.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - b3a7b73010694455b7984314
+  - f0e056396d4c4dc880fd8d0a
+  config:
+    metadata:
+      run_name: target_params_1e+08-depth_64-d_model_360-n_heads_4
+    model:
+      d_model: 360
+      lr: 0.00018396069167424186
+      transformer:
+        n_layers: 64
+    sweep_metadata:
+      actual_non_embedding_params: 99763200
+      flop_limited_steps: 182109
+      forward_flops_per_example: 57200209920.0
+      target_depth: 64
+      target_non_embedding_params: 100000000
+      training_flops_per_step: 5491220152320.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - 23cef8286e65487cbca89790
+  config:
+    metadata:
+      run_name: target_params_1e+08-depth_8-d_model_1020-n_heads_4
+    model:
+      d_model: 1020
+      lr: 9.179460557264037e-05
+      transformer:
+        n_layers: 8
+    sweep_metadata:
+      actual_non_embedding_params: 99960000
+      flop_limited_steps: 189821
+      forward_flops_per_example: 54876456960.0
+      target_depth: 8
+      target_non_embedding_params: 100000000
+      training_flops_per_step: 5268139868160.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - 50f1c79838b64fc2a4c5adea
+  config:
+    metadata:
+      run_name: target_params_1e+09-depth_16-d_model_2280-n_heads_4
+    model:
+      d_model: 2280
+      lr: 4.2632784238585714e-05
+      transformer:
+        n_layers: 16
+    sweep_metadata:
+      actual_non_embedding_params: 998457600
+      flop_limited_steps: 19708
+      forward_flops_per_example: 528574771200.0
+      target_depth: 16
+      target_non_embedding_params: 1000000000
+      training_flops_per_step: 50743178035200.0
+    trainer:
+      checkpoint_steps: 19708
+      n_steps: 19708
+      val_check_interval: 19708
+- source_run_hashes:
+  - 2f6a07a73a804bedb742c68a
+  config:
+    metadata:
+      run_name: target_params_1e+09-depth_2-d_model_6456-n_heads_4
+    model:
+      d_model: 6456
+      lr: 2.1273346920082344e-05
+      transformer:
+        n_layers: 2
+    sweep_metadata:
+      actual_non_embedding_params: 1000447584
+      flop_limited_steps: 17973
+      forward_flops_per_example: 579578155008.0
+      target_depth: 2
+      target_non_embedding_params: 1000000000
+      training_flops_per_step: 55639502880768.0
+    trainer:
+      checkpoint_steps: 17973
+      n_steps: 17973
+      val_check_interval: 17973
+- source_run_hashes:
+  - 2b219daa55fb405caccb96a6
+  config:
+    metadata:
+      run_name: target_params_1e+09-depth_24-d_model_1864-n_heads_4
+    model:
+      d_model: 1864
+      lr: 4.8821594341382024e-05
+      transformer:
+        n_layers: 24
+    sweep_metadata:
+      actual_non_embedding_params: 1001102208
+      flop_limited_steps: 19677
+      forward_flops_per_example: 529402245120.0
+      target_depth: 24
+      target_non_embedding_params: 1000000000
+      training_flops_per_step: 50822615531520.0
+    trainer:
+      checkpoint_steps: 19677
+      n_steps: 19677
+      val_check_interval: 19677
+- source_run_hashes:
+  - 55f9db5eec094bf4a9515d82
+  config:
+    metadata:
+      run_name: target_params_1e+09-depth_32-d_model_1612-n_heads_4
+    model:
+      d_model: 1612
+      lr: 5.375014673006446e-05
+      transformer:
+        n_layers: 32
+    sweep_metadata:
+      actual_non_embedding_params: 998356736
+      flop_limited_steps: 19714
+      forward_flops_per_example: 528410814464.0
+      target_depth: 32
+      target_non_embedding_params: 1000000000
+      training_flops_per_step: 50727438188544.0
+    trainer:
+      checkpoint_steps: 19714
+      n_steps: 19714
+      val_check_interval: 19714
+- source_run_hashes:
+  - 7b280c332745424fa0e0399d
+  config:
+    metadata:
+      run_name: target_params_1e+09-depth_4-d_model_4564-n_heads_4
+    model:
+      d_model: 4564
+      lr: 2.6820803257768254e-05
+      transformer:
+        n_layers: 4
+    sweep_metadata:
+      actual_non_embedding_params: 1000027168
+      flop_limited_steps: 18984
+      forward_flops_per_example: 548708177920.0
+      target_depth: 4
+      target_non_embedding_params: 1000000000
+      training_flops_per_step: 52675985080320.0
+    trainer:
+      checkpoint_steps: 18984
+      n_steps: 18984
+      val_check_interval: 18984
+- source_run_hashes:
+  - 7e9025069b39496599e141be
+  config:
+    metadata:
+      run_name: target_params_1e+09-depth_64-d_model_1140-n_heads_4
+    model:
+      d_model: 1140
+      lr: 6.776658679703689e-05
+      transformer:
+        n_layers: 64
+    sweep_metadata:
+      actual_non_embedding_params: 998822400
+      flop_limited_steps: 19575
+      forward_flops_per_example: 532147476480.0
+      target_depth: 64
+      target_non_embedding_params: 1000000000
+      training_flops_per_step: 51086157742080.0
+    trainer:
+      checkpoint_steps: 19575
+      n_steps: 19575
+      val_check_interval: 19575
+- source_run_hashes:
+  - ed3e452eb96645748b25599d
+  config:
+    metadata:
+      run_name: target_params_1e+09-depth_8-d_model_3228-n_heads_4
+    model:
+      d_model: 3228
+      lr: 3.38148712609407e-05
+      transformer:
+        n_layers: 8
+    sweep_metadata:
+      actual_non_embedding_params: 1000576704
+      flop_limited_steps: 19473
+      forward_flops_per_example: 534942713856.0
+      target_depth: 8
+      target_non_embedding_params: 1000000000
+      training_flops_per_step: 51354500530176.0
+    trainer:
+      checkpoint_steps: 19473
+      n_steps: 19473
+      val_check_interval: 19473
+- source_run_hashes:
+  - 1739b2f43be0436c8c5209d0
+  config:
+    metadata:
+      run_name: target_params_3e+06-depth_16-d_model_124-n_heads_4
+    model:
+      d_model: 124
+      lr: 0.0005295902464119252
+      transformer:
+        n_layers: 16
+    sweep_metadata:
+      actual_non_embedding_params: 2972032
+      flop_limited_steps: 5067892
+      forward_flops_per_example: 2055424000.0
+      target_depth: 16
+      target_non_embedding_params: 3000000
+      training_flops_per_step: 197320704000.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - 68194c1b990942ff8ab93f5e
+  config:
+    metadata:
+      run_name: target_params_3e+06-depth_2-d_model_352-n_heads_4
+    model:
+      d_model: 352
+      lr: 0.0002642604098846564
+      transformer:
+        n_layers: 2
+    sweep_metadata:
+      actual_non_embedding_params: 2980736
+      flop_limited_steps: 5488410
+      forward_flops_per_example: 1897938944.0
+      target_depth: 2
+      target_non_embedding_params: 3000000
+      training_flops_per_step: 182202138624.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - 5a2adbfec8464a7a8f297478
+  config:
+    metadata:
+      run_name: target_params_3e+06-depth_24-d_model_100-n_heads_4
+    model:
+      d_model: 100
+      lr: 0.000606468487555982
+      transformer:
+        n_layers: 24
+    sweep_metadata:
+      actual_non_embedding_params: 2904000
+      flop_limited_steps: 4915333
+      forward_flops_per_example: 2119219200.0
+      target_depth: 24
+      target_non_embedding_params: 3000000
+      training_flops_per_step: 203445043200.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - 5cdd6defff304dd4a24a1068
+  config:
+    metadata:
+      run_name: target_params_3e+06-depth_32-d_model_88-n_heads_4
+    model:
+      d_model: 88
+      lr: 0.0006676916359051355
+      transformer:
+        n_layers: 32
+    sweep_metadata:
+      actual_non_embedding_params: 3001856
+      flop_limited_steps: 4583268
+      forward_flops_per_example: 2272759808.0
+      target_depth: 32
+      target_non_embedding_params: 3000000
+      training_flops_per_step: 218184941568.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - a5e855a12ba8432e870c4adb
+  config:
+    metadata:
+      run_name: target_params_3e+06-depth_4-d_model_248-n_heads_4
+    model:
+      d_model: 248
+      lr: 0.0003331716672961651
+      transformer:
+        n_layers: 4
+    sweep_metadata:
+      actual_non_embedding_params: 2962112
+      flop_limited_steps: 5581094
+      forward_flops_per_example: 1866420224.0
+      target_depth: 4
+      target_non_embedding_params: 3000000
+      training_flops_per_step: 179176341504.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - d32d795996b040119d7a134d
+  config:
+    metadata:
+      run_name: target_params_3e+06-depth_64-d_model_64-n_heads_4
+    model:
+      d_model: 64
+      lr: 0.0008418057614885066
+      transformer:
+        n_layers: 64
+    sweep_metadata:
+      actual_non_embedding_params: 3186688
+      flop_limited_steps: 3871296
+      forward_flops_per_example: 2690744320.0
+      target_depth: 64
+      target_non_embedding_params: 3000000
+      training_flops_per_step: 258311454720.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - f9ef360d8abc49fe834fd1ed
+  config:
+    metadata:
+      run_name: target_params_3e+06-depth_8-d_model_176-n_heads_4
+    model:
+      d_model: 176
+      lr: 0.00042005293164177324
+      transformer:
+        n_layers: 8
+    sweep_metadata:
+      actual_non_embedding_params: 2987776
+      flop_limited_steps: 5370854
+      forward_flops_per_example: 1939480576.0
+      target_depth: 8
+      target_non_embedding_params: 3000000
+      training_flops_per_step: 186190135296.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - b780b776b6914c3bb9fa1a56
+  config:
+    metadata:
+      run_name: target_params_3e+07-depth_16-d_model_396-n_heads_4
+    model:
+      d_model: 396
+      lr: 0.00019508799990755282
+      transformer:
+        n_layers: 16
+    sweep_metadata:
+      actual_non_embedding_params: 30172032
+      flop_limited_steps: 601492
+      forward_flops_per_example: 17318062080.0
+      target_depth: 16
+      target_non_embedding_params: 30000000
+      training_flops_per_step: 1662533959680.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - 920955f5b76a4728909d4e5d
+  config:
+    metadata:
+      run_name: target_params_3e+07-depth_2-d_model_1116-n_heads_4
+    model:
+      d_model: 1116
+      lr: 9.734702473928876e-05
+      transformer:
+        n_layers: 2
+    sweep_metadata:
+      actual_non_embedding_params: 29913264
+      flop_limited_steps: 585075
+      forward_flops_per_example: 17804003328.0
+      target_depth: 2
+      target_non_embedding_params: 30000000
+      training_flops_per_step: 1709184319488.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - 8d8a6312a2fd41c8873ab457
+  config:
+    metadata:
+      run_name: target_params_3e+07-depth_24-d_model_324-n_heads_4
+    model:
+      d_model: 324
+      lr: 0.00022340804998932648
+      transformer:
+        n_layers: 24
+    sweep_metadata:
+      actual_non_embedding_params: 30310848
+      flop_limited_steps: 589195
+      forward_flops_per_example: 17679513600.0
+      target_depth: 24
+      target_non_embedding_params: 30000000
+      training_flops_per_step: 1697233305600.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - e59e32c16dd646ab8159777a
+  config:
+    metadata:
+      run_name: target_params_3e+07-depth_32-d_model_280-n_heads_4
+    model:
+      d_model: 280
+      lr: 0.00024596114956093297
+      transformer:
+        n_layers: 32
+    sweep_metadata:
+      actual_non_embedding_params: 30195200
+      flop_limited_steps: 582467
+      forward_flops_per_example: 17883729920.0
+      target_depth: 32
+      target_non_embedding_params: 30000000
+      training_flops_per_step: 1716838072320.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - c2ebab477aeb49f8b6e175e2
+  config:
+    metadata:
+      run_name: target_params_3e+07-depth_4-d_model_792-n_heads_4
+    model:
+      d_model: 792
+      lr: 0.0001227322342868773
+      transformer:
+        n_layers: 4
+    sweep_metadata:
+      actual_non_embedding_params: 30140352
+      flop_limited_steps: 605240
+      forward_flops_per_example: 17210806272.0
+      target_depth: 4
+      target_non_embedding_params: 30000000
+      training_flops_per_step: 1652237402112.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - 9b8368ac698e4de9a991e66c
+  - e6d59b1036fb43d5ac764b97
+  config:
+    metadata:
+      run_name: target_params_3e+07-depth_64-d_model_196-n_heads_4
+    model:
+      d_model: 196
+      lr: 0.0003101005039879624
+      transformer:
+        n_layers: 64
+    sweep_metadata:
+      actual_non_embedding_params: 29628928
+      flop_limited_steps: 564485
+      forward_flops_per_example: 18453428224.0
+      target_depth: 64
+      target_non_embedding_params: 30000000
+      training_flops_per_step: 1771529109504.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - 905cee02ec9d4432a2dcf9d6
+  config:
+    metadata:
+      run_name: target_params_3e+07-depth_8-d_model_560-n_heads_4
+    model:
+      d_model: 560
+      lr: 0.00015473715168378953
+      transformer:
+        n_layers: 8
+    sweep_metadata:
+      actual_non_embedding_params: 30150400
+      flop_limited_steps: 610196
+      forward_flops_per_example: 17071022080.0
+      target_depth: 8
+      target_non_embedding_params: 30000000
+      training_flops_per_step: 1638818119680.0
+    trainer:
+      checkpoint_steps: 100000
+      n_steps: 100000
+      val_check_interval: 100000
+- source_run_hashes:
+  - 594649a2a9034fcfa7888742
+  config:
+    metadata:
+      run_name: target_params_3e+08-depth_16-d_model_1248-n_heads_4
+    model:
+      d_model: 1248
+      lr: 7.186561302023313e-05
+      transformer:
+        n_layers: 16
+    sweep_metadata:
+      actual_non_embedding_params: 299240448
+      flop_limited_steps: 64806
+      forward_flops_per_example: 160737607680.0
+      target_depth: 16
+      target_non_embedding_params: 300000000
+      training_flops_per_step: 15430810337280.0
+    trainer:
+      checkpoint_steps: 64806
+      n_steps: 64806
+      val_check_interval: 64806
+- source_run_hashes:
+  - 60230fd9bae24e5db8b7ba5e
+  config:
+    metadata:
+      run_name: target_params_3e+08-depth_2-d_model_3536-n_heads_4
+    model:
+      d_model: 3536
+      lr: 3.586024569373804e-05
+      transformer:
+        n_layers: 2
+    sweep_metadata:
+      actual_non_embedding_params: 300149824
+      flop_limited_steps: 59625
+      forward_flops_per_example: 174704877568.0
+      target_depth: 2
+      target_non_embedding_params: 300000000
+      training_flops_per_step: 16771668246528.0
+    trainer:
+      checkpoint_steps: 59625
+      n_steps: 59625
+      val_check_interval: 59625
+- source_run_hashes:
+  - aeb31ea60db94b95ac6eb14a
+  config:
+    metadata:
+      run_name: target_params_3e+08-depth_24-d_model_1020-n_heads_4
+    model:
+      d_model: 1020
+      lr: 8.229802178373882e-05
+      transformer:
+        n_layers: 24
+    sweep_metadata:
+      actual_non_embedding_params: 299880000
+      flop_limited_steps: 64528
+      forward_flops_per_example: 161430128640.0
+      target_depth: 24
+      target_non_embedding_params: 300000000
+      training_flops_per_step: 15497292349440.0
+    trainer:
+      checkpoint_steps: 64528
+      n_steps: 64528
+      val_check_interval: 64528
+- source_run_hashes:
+  - ab97b0ab7e784660a8c2e7ce
+  config:
+    metadata:
+      run_name: target_params_3e+08-depth_32-d_model_884-n_heads_4
+    model:
+      d_model: 884
+      lr: 9.060602805264273e-05
+      transformer:
+        n_layers: 32
+    sweep_metadata:
+      actual_non_embedding_params: 300361984
+      flop_limited_steps: 64199
+      forward_flops_per_example: 162257704960.0
+      target_depth: 32
+      target_non_embedding_params: 300000000
+      training_flops_per_step: 15576739676160.0
+    trainer:
+      checkpoint_steps: 64199
+      n_steps: 64199
+      val_check_interval: 64199
+- source_run_hashes:
+  - f691f7c85eca4603bd73a0de
+  config:
+    metadata:
+      run_name: target_params_3e+08-depth_4-d_model_2500-n_heads_4
+    model:
+      d_model: 2500
+      lr: 4.5211531506545764e-05
+      transformer:
+        n_layers: 4
+    sweep_metadata:
+      actual_non_embedding_params: 300100000
+      flop_limited_steps: 62818
+      forward_flops_per_example: 165825280000.0
+      target_depth: 4
+      target_non_embedding_params: 300000000
+      training_flops_per_step: 15919226880000.0
+    trainer:
+      checkpoint_steps: 62818
+      n_steps: 62818
+      val_check_interval: 62818
+- source_run_hashes:
+  - 8652c9a0954349f19aa0bc44
+  config:
+    metadata:
+      run_name: target_params_3e+08-depth_64-d_model_624-n_heads_4
+    model:
+      d_model: 624
+      lr: 0.00011423338610031741
+      transformer:
+        n_layers: 64
+    sweep_metadata:
+      actual_non_embedding_params: 299440128
+      flop_limited_steps: 63448
+      forward_flops_per_example: 164176896000.0
+      target_depth: 64
+      target_non_embedding_params: 300000000
+      training_flops_per_step: 15760982016000.0
+    trainer:
+      checkpoint_steps: 63448
+      n_steps: 63448
+      val_check_interval: 63448
+- source_run_hashes:
+  - 65e040f06f314ef69a0a6fa9
+  config:
+    metadata:
+      run_name: target_params_3e+08-depth_8-d_model_1768-n_heads_4
+    model:
+      d_model: 1768
+      lr: 5.700135460935552e-05
+      transformer:
+        n_layers: 8
+    sweep_metadata:
+      actual_non_embedding_params: 300220544
+      flop_limited_steps: 64241
+      forward_flops_per_example: 162152247296.0
+      target_depth: 8
+      target_non_embedding_params: 300000000
+      training_flops_per_step: 15566615740416.0
+    trainer:
+      checkpoint_steps: 64241
+      n_steps: 64241
+      val_check_interval: 64241

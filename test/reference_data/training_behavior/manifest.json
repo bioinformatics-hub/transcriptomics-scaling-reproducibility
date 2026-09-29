@@ -1,0 +1,392 @@
+{
+  "format_version": 1,
+  "reference_set": "publication-training-semantics-v1",
+  "captured_with": {
+    "torch": "2.10.0",
+    "numpy": "1.26.4"
+  },
+  "model_seed": 42,
+  "dataset_seed": 17,
+  "rtol": 1e-05,
+  "atol": 1e-06,
+  "cases": [
+    {
+      "id": "ranked_context_original",
+      "file": "ranked_context_original.npz",
+      "sha256": "41ce04be54b6b7b74c468a0f13c58864b17484d49172f5a3144b7b60cc244ded",
+      "config": {
+        "metadata": {
+          "run_name": "test",
+          "pipeline": "geneformer",
+          "training_behavior": "legacy"
+        },
+        "paths": {},
+        "model": {
+          "model_class": "transformer",
+          "total_genes": 32,
+          "context_length": 16,
+          "d_model": 8,
+          "dropout": 0.0,
+          "lr": 0.001,
+          "transformer": {
+            "n_layers": 1,
+            "n_heads": 2,
+            "gating": false,
+            "norm_first": true
+          }
+        },
+        "datamodule": {
+          "labels": "none",
+          "mask_pct": 0.15,
+          "n_bins": 5,
+          "mask_strategy": "uniform",
+          "selection": "active"
+        },
+        "trainer": {
+          "n_steps": 10,
+          "lr_scheduler": "constant",
+          "compute_spearman": false,
+          "val_check_interval": 1,
+          "find_lr": false
+        }
+      },
+      "binned_dataset": false
+    },
+    {
+      "id": "ranked_lr_original",
+      "file": "ranked_lr_original.npz",
+      "sha256": "41ce04be54b6b7b74c468a0f13c58864b17484d49172f5a3144b7b60cc244ded",
+      "config": {
+        "metadata": {
+          "run_name": "test",
+          "pipeline": "geneformer",
+          "training_behavior": "legacy"
+        },
+        "paths": {},
+        "model": {
+          "model_class": "transformer",
+          "total_genes": 32,
+          "context_length": 16,
+          "d_model": 8,
+          "dropout": 0.0,
+          "lr": 0.001,
+          "transformer": {
+            "n_layers": 1,
+            "n_heads": 2,
+            "gating": false,
+            "norm_first": true
+          }
+        },
+        "datamodule": {
+          "labels": "none",
+          "mask_pct": 0.15,
+          "n_bins": 5,
+          "mask_strategy": "uniform",
+          "selection": "active"
+        },
+        "trainer": {
+          "n_steps": 10,
+          "lr_scheduler": "constant",
+          "compute_spearman": false,
+          "val_check_interval": 1,
+          "find_lr": false
+        }
+      },
+      "binned_dataset": false
+    },
+    {
+      "id": "ranked_depth_width_original",
+      "file": "ranked_depth_width_original.npz",
+      "sha256": "41ce04be54b6b7b74c468a0f13c58864b17484d49172f5a3144b7b60cc244ded",
+      "config": {
+        "metadata": {
+          "run_name": "test",
+          "pipeline": "geneformer",
+          "training_behavior": "legacy"
+        },
+        "paths": {},
+        "model": {
+          "model_class": "transformer",
+          "total_genes": 32,
+          "context_length": 16,
+          "d_model": 8,
+          "dropout": 0.0,
+          "lr": 0.001,
+          "transformer": {
+            "n_layers": 1,
+            "n_heads": 2,
+            "gating": false,
+            "norm_first": true
+          }
+        },
+        "datamodule": {
+          "labels": "none",
+          "mask_pct": 0.15,
+          "n_bins": 5,
+          "mask_strategy": "uniform",
+          "selection": "active"
+        },
+        "trainer": {
+          "n_steps": 10,
+          "lr_scheduler": "constant",
+          "compute_spearman": false,
+          "val_check_interval": 1,
+          "find_lr": false
+        }
+      },
+      "binned_dataset": false
+    },
+    {
+      "id": "binned_context_original",
+      "file": "binned_context_original.npz",
+      "sha256": "21dcd972df3c40d1c854e84bf4ba5c0a0dcb3e502bac939ab4c133eb400c1f4a",
+      "config": {
+        "metadata": {
+          "run_name": "test",
+          "pipeline": "default",
+          "training_behavior": "legacy"
+        },
+        "paths": {},
+        "model": {
+          "model_class": "transformer",
+          "total_genes": 32,
+          "context_length": 16,
+          "d_model": 8,
+          "dropout": 0.0,
+          "lr": 0.001,
+          "transformer": {
+            "n_layers": 1,
+            "n_heads": 2,
+            "gating": false,
+            "norm_first": true
+          }
+        },
+        "datamodule": {
+          "labels": "none",
+          "mask_pct": 0.15,
+          "n_bins": 5,
+          "mask_strategy": "uniform",
+          "selection": "active"
+        },
+        "trainer": {
+          "n_steps": 10,
+          "lr_scheduler": "constant",
+          "compute_spearman": false,
+          "val_check_interval": 1,
+          "find_lr": false
+        }
+      },
+      "binned_dataset": true
+    },
+    {
+      "id": "binned_lr_original",
+      "file": "binned_lr_original.npz",
+      "sha256": "21dcd972df3c40d1c854e84bf4ba5c0a0dcb3e502bac939ab4c133eb400c1f4a",
+      "config": {
+        "metadata": {
+          "run_name": "test",
+          "pipeline": "default",
+          "training_behavior": "legacy"
+        },
+        "paths": {},
+        "model": {
+          "model_class": "transformer",
+          "total_genes": 32,
+          "context_length": 16,
+          "d_model": 8,
+          "dropout": 0.0,
+          "lr": 0.001,
+          "transformer": {
+            "n_layers": 1,
+            "n_heads": 2,
+            "gating": false,
+            "norm_first": true
+          }
+        },
+        "datamodule": {
+          "labels": "none",
+          "mask_pct": 0.15,
+          "n_bins": 5,
+          "mask_strategy": "uniform",
+          "selection": "active"
+        },
+        "trainer": {
+          "n_steps": 10,
+          "lr_scheduler": "constant",
+          "compute_spearman": false,
+          "val_check_interval": 1,
+          "find_lr": false
+        }
+      },
+      "binned_dataset": true
+    },
+    {
+      "id": "binned_batch",
+      "file": "binned_batch.npz",
+      "sha256": "61033e4877d102fa057b85ea3a65d3a5e80f105bfb2dcc9647eb6235f9953f22",
+      "config": {
+        "metadata": {
+          "run_name": "test",
+          "pipeline": "default",
+          "training_behavior": "legacy_padding"
+        },
+        "paths": {},
+        "model": {
+          "model_class": "transformer",
+          "total_genes": 32,
+          "context_length": 16,
+          "d_model": 8,
+          "dropout": 0.0,
+          "lr": 0.001,
+          "transformer": {
+            "n_layers": 1,
+            "n_heads": 2,
+            "gating": false,
+            "norm_first": true
+          }
+        },
+        "datamodule": {
+          "labels": "none",
+          "mask_pct": 0.15,
+          "n_bins": 5,
+          "mask_strategy": "uniform",
+          "selection": "active"
+        },
+        "trainer": {
+          "n_steps": 10,
+          "lr_scheduler": "constant",
+          "compute_spearman": false,
+          "val_check_interval": 1,
+          "find_lr": false
+        }
+      },
+      "binned_dataset": true
+    },
+    {
+      "id": "ranked_batch",
+      "file": "ranked_batch.npz",
+      "sha256": "41ce04be54b6b7b74c468a0f13c58864b17484d49172f5a3144b7b60cc244ded",
+      "config": {
+        "metadata": {
+          "run_name": "test",
+          "pipeline": "geneformer",
+          "training_behavior": "legacy_padding"
+        },
+        "paths": {},
+        "model": {
+          "model_class": "transformer",
+          "total_genes": 32,
+          "context_length": 16,
+          "d_model": 8,
+          "dropout": 0.0,
+          "lr": 0.001,
+          "transformer": {
+            "n_layers": 1,
+            "n_heads": 2,
+            "gating": false,
+            "norm_first": true
+          }
+        },
+        "datamodule": {
+          "labels": "none",
+          "mask_pct": 0.15,
+          "n_bins": 5,
+          "mask_strategy": "uniform",
+          "selection": "active"
+        },
+        "trainer": {
+          "n_steps": 10,
+          "lr_scheduler": "constant",
+          "compute_spearman": false,
+          "val_check_interval": 1,
+          "find_lr": false
+        }
+      },
+      "binned_dataset": false
+    },
+    {
+      "id": "ranked_context_completion",
+      "file": "ranked_context_completion.npz",
+      "sha256": "3c910fbd1468725384f69bcc4ee2f689499390cd6bdd4120c8a0b8e48ec7fec6",
+      "config": {
+        "metadata": {
+          "run_name": "test",
+          "pipeline": "geneformer",
+          "training_behavior": "corrected"
+        },
+        "paths": {},
+        "model": {
+          "model_class": "transformer",
+          "total_genes": 32,
+          "context_length": 16,
+          "d_model": 8,
+          "dropout": 0.0,
+          "lr": 0.001,
+          "transformer": {
+            "n_layers": 1,
+            "n_heads": 2,
+            "gating": false,
+            "norm_first": true
+          }
+        },
+        "datamodule": {
+          "labels": "none",
+          "mask_pct": 0.15,
+          "n_bins": 5,
+          "mask_strategy": "uniform",
+          "selection": "active"
+        },
+        "trainer": {
+          "n_steps": 10,
+          "lr_scheduler": "constant",
+          "compute_spearman": false,
+          "val_check_interval": 1,
+          "find_lr": false
+        }
+      },
+      "binned_dataset": false
+    },
+    {
+      "id": "binned_depth_width_replacement",
+      "file": "binned_depth_width_replacement.npz",
+      "sha256": "67a780c95cb10b26ea7132814ab226890ffb1e4c780e4061b0a447c6be8a0877",
+      "config": {
+        "metadata": {
+          "run_name": "test",
+          "pipeline": "default",
+          "training_behavior": "corrected"
+        },
+        "paths": {},
+        "model": {
+          "model_class": "transformer",
+          "total_genes": 32,
+          "context_length": 16,
+          "d_model": 8,
+          "dropout": 0.0,
+          "lr": 0.001,
+          "transformer": {
+            "n_layers": 1,
+            "n_heads": 2,
+            "gating": false,
+            "norm_first": true
+          }
+        },
+        "datamodule": {
+          "labels": "none",
+          "mask_pct": 0.15,
+          "n_bins": 5,
+          "mask_strategy": "uniform",
+          "selection": "active"
+        },
+        "trainer": {
+          "n_steps": 10,
+          "lr_scheduler": "constant",
+          "compute_spearman": false,
+          "val_check_interval": 1,
+          "find_lr": false
+        }
+      },
+      "binned_dataset": true
+    }
+  ]
+}

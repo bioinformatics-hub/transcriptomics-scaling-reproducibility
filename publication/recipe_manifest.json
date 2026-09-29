@@ -1,0 +1,68 @@
+{
+  "format_version": 1,
+  "recipes": [
+    {
+      "file": "recipes/geneformer_batch.yml",
+      "sha256": "b37493a1dcd9844c97c476b4336bd4402493a70ef58e777bec774bfd3b94cf04",
+      "config_count": 20,
+      "training_behavior": "legacy_padding",
+      "behavior_reference_id": "ranked_batch"
+    },
+    {
+      "file": "recipes/geneformer_dw.yml",
+      "sha256": "0377ca20111a24d5719f1799c78a9d39510f64d27b8741884b2af2f4959069ef",
+      "config_count": 49,
+      "training_behavior": "legacy",
+      "behavior_reference_id": "ranked_depth_width_original"
+    },
+    {
+      "file": "recipes/geneformer_like.yml",
+      "sha256": "51cb692677f205a85186c25df78357eb68e1be4241a832f5df6d83f1f7bb56d6",
+      "config_count": 99,
+      "training_behavior": "legacy",
+      "behavior_reference_id": "ranked_context_original"
+    },
+    {
+      "file": "recipes/geneformer_like_missing.yml",
+      "sha256": "0740a841a47ddb5267629b94395060e1facaf5b2406ae51ab2641af11deddcae",
+      "config_count": 1,
+      "training_behavior": "corrected",
+      "behavior_reference_id": "ranked_context_completion"
+    },
+    {
+      "file": "recipes/geneformer_lr.yml",
+      "sha256": "23ece814a68b44d3bd65d4ee9d8e1838a785a89171ff72606c736098bf8564df",
+      "config_count": 60,
+      "training_behavior": "legacy",
+      "behavior_reference_id": "ranked_lr_original"
+    },
+    {
+      "file": "recipes/scgpt_batch.yml",
+      "sha256": "33c059faae5184b8573fd55c7b65fba9b67a5e70d4a310cd0d15d927ef7692ba",
+      "config_count": 20,
+      "training_behavior": "legacy_padding",
+      "behavior_reference_id": "binned_batch"
+    },
+    {
+      "file": "recipes/scgpt_dw_rerun.yml",
+      "sha256": "82bd1eb6efb4dee30b7ff863bf5f3a6ccf0d818e67e58c0b993e72e952fec337",
+      "config_count": 49,
+      "training_behavior": "corrected",
+      "behavior_reference_id": "binned_depth_width_replacement"
+    },
+    {
+      "file": "recipes/scgpt_like.yml",
+      "sha256": "ee2e96935c09c669cd232e099c95a178ef32d57e0f86bf077092dfbbd0cbc7e3",
+      "config_count": 100,
+      "training_behavior": "legacy",
+      "behavior_reference_id": "binned_context_original"
+    },
+    {
+      "file": "recipes/scgpt_lr.yml",
+      "sha256": "cd30c83589b18ba03dc97c3962f2a0ae304f2c099276d14069b215659d532ca7",
+      "config_count": 60,
+      "training_behavior": "legacy",
+      "behavior_reference_id": "binned_lr_original"
+    }
+  ]
+}

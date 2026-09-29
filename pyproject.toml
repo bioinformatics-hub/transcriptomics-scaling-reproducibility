@@ -1,0 +1,58 @@
+[project]
+name = "transcriptomics-scaling"
+version = "0.1.0"
+description = "Scaling experiments for neural transcriptomics models"
+readme = "README.md"
+license = "MIT"
+requires-python = "==3.12.*"
+dependencies = [
+    "aim>=3.29.1",
+    "datasets>=4.0.0",
+    "jupyter>=1.1.1",
+    "lightning>=2.5.2",
+    "polars>=1.32.2",
+    "scanpy>=1.11.4",
+    "tiledb>=0.34.2",
+    "tiledb-vector-search>=0.13.0",
+    "tiledbsoma>=1.17.1",
+    "tiledbsoma-ml>=0.1.0",
+    "torch>=2.2.2",
+    "transformers>=4.55.0",
+    "numpy<2",
+    "pytest>=8.4.1",
+    "ruff>=0.12.11",
+    "scib>=1.1.7",
+    "snakeviz>=2.2.2",
+    "pyinstrument>=5.1.2",
+    "pyprof2calltree>=1.4.5",
+    "igraph>=1.0.0",
+    "leidenalg>=0.11.0",
+    "rdflib>=7.6.0",
+    "graphviz>=0.21",
+]
+
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cpu", marker = "sys_platform == 'darwin'" },
+  { index = "pytorch-cu128", marker = "sys_platform == 'linux'" },
+]
+torchvision = [
+  { index = "pytorch-cpu", marker = "sys_platform == 'darwin'" },
+  { index = "pytorch-cu128", marker = "sys_platform == 'linux'" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv]
+required-environments = [
+    "sys_platform == 'darwin' and platform_machine == 'x86_64'",
+    "sys_platform == 'linux'"
+]

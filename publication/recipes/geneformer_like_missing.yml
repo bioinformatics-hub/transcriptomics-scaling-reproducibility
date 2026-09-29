@@ -1,0 +1,84 @@
+source_repository: aim-repo/geneformer_like_missing
+behavior_evidence: Checked against the archived implementation delivered for this
+  experiment family. Portable synthetic reference cases accompany the release; the
+  detailed source-history mapping is retained in the private research archive.
+behavior_reference_id: ranked_context_completion
+defaults:
+  datamodule:
+    batch_size: 32
+    labels: cell_type
+    mask_pct: 0.15
+    mask_strategy: uniform
+    max_val_samples: 30000
+    n_bins: 50
+    normalize_expr_for_ranking: true
+    obs_value_filter: is_primary_data == True
+    selection: active
+  downstream:
+    clustering_method: leiden
+    coarse_k: 30
+    keep_artifacts: false
+    n_neighbors: 15
+    poll_interval_s: 60
+    resolution: 1.0
+    ridge_seed: 0
+  metadata:
+    pipeline: geneformer
+    run_name: context_length_1024-d_model_512-transformer_n_layers_4
+    title: geneformer_like
+    training_behavior: corrected
+  model:
+    bioformer:
+      chunk_size: 200
+      d_opm: 32
+      d_z: 128
+      gating: false
+      n_heads: 4
+      n_layers: 4
+      norm_first: true
+      pair_updates: true
+    context_length: 1024
+    d_model: 512
+    dropout: 0.2
+    freeze_encoder: true
+    from_ckpt: false
+    lr: 0.001
+    model_class: transformer
+    total_genes: 61497
+    transformer:
+      gating: false
+      n_heads: 4
+      n_layers: 4
+      norm_first: true
+  paths:
+    path_to_aimrepo: output/reproduction/aim-repo/geneformer_like_missing
+    path_to_celltypes: data/csvs/celltypes.csv
+    path_to_census: data/census/census_data/homo_sapiens
+    path_to_ckpt_dir: output/reproduction/checkpoints
+    path_to_ckpt_file: null
+    path_to_coarse_labels_dir: output/reproduction/coarse_labels
+    path_to_dataset_ids: data/csvs/dataset_ids.csv
+    path_to_finetune_dir: null
+    path_to_hvg: data/csvs/hvg.csv
+    path_to_means: data/csvs/means.csv
+  trainer:
+    accumulate_grad: 1
+    checkpoint_steps: 12500
+    checkpoint: true
+    compute_spearman: false
+    find_lr: false
+    lr_scheduler: onecycle
+    max_time: null
+    n_epochs: 1000
+    n_steps: 50000
+    precision: bf16-mixed
+    resume_dataloader: true
+    resume_training: false
+    training_state_checkpoint_steps: 12500
+    training_state_checkpoint: true
+    val_check_interval: 500
+runs:
+- source_run_hashes:
+  - 64f94ee087784d10a6468acb
+  - ed7be3706c3b4022adbbd889
+  config: {}

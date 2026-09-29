@@ -1,0 +1,91 @@
+{
+  "format_version": 1,
+  "reference_set": "publication-training-semantics-v1",
+  "historical_comparison": "At capture time, release behavior modes were compared directly with archived delivered implementations using identical weights and synthetic inputs. Losses, gradients and the covered binned batches matched exactly.",
+  "portable_verification": "test/test_training_references.py compares the release implementation with saved historical outputs. This is distinct from rerunning the archived source comparison.",
+  "limitations": "Small CPU examples; no full training, optimizer trajectory, historical dependency environment, or end-to-end downstream validation.",
+  "comparisons": [
+    {
+      "dataset_batch_match": null,
+      "behavior": "legacy",
+      "pipeline": "geneformer",
+      "losses_match": true,
+      "gradient_tensors_match": 18,
+      "finite_losses": true,
+      "reference_id": "ranked_context_original"
+    },
+    {
+      "dataset_batch_match": null,
+      "behavior": "legacy",
+      "pipeline": "geneformer",
+      "losses_match": true,
+      "gradient_tensors_match": 18,
+      "finite_losses": true,
+      "reference_id": "ranked_lr_original"
+    },
+    {
+      "dataset_batch_match": null,
+      "behavior": "legacy",
+      "pipeline": "geneformer",
+      "losses_match": true,
+      "gradient_tensors_match": 18,
+      "finite_losses": true,
+      "reference_id": "ranked_depth_width_original"
+    },
+    {
+      "dataset_batch_match": true,
+      "behavior": "legacy",
+      "pipeline": "default",
+      "losses_match": true,
+      "gradient_tensors_match": 30,
+      "finite_losses": true,
+      "reference_id": "binned_context_original"
+    },
+    {
+      "dataset_batch_match": true,
+      "behavior": "legacy",
+      "pipeline": "default",
+      "losses_match": true,
+      "gradient_tensors_match": 30,
+      "finite_losses": true,
+      "reference_id": "binned_lr_original"
+    },
+    {
+      "dataset_batch_match": true,
+      "behavior": "legacy_padding",
+      "pipeline": "default",
+      "losses_match": true,
+      "gradient_tensors_match": 30,
+      "finite_losses": true,
+      "reference_id": "binned_batch"
+    },
+    {
+      "dataset_batch_match": null,
+      "behavior": "legacy_padding",
+      "pipeline": "geneformer",
+      "losses_match": true,
+      "gradient_tensors_match": 18,
+      "finite_losses": true,
+      "reference_id": "ranked_batch"
+    },
+    {
+      "dataset_batch_match": null,
+      "behavior": "corrected",
+      "pipeline": "geneformer",
+      "losses_match": true,
+      "gradient_tensors_match": 18,
+      "finite_losses": true,
+      "reference_id": "ranked_context_completion"
+    },
+    {
+      "dataset_batch_match": true,
+      "behavior": "corrected",
+      "pipeline": "default",
+      "losses_match": true,
+      "gradient_tensors_match": 30,
+      "finite_losses": true,
+      "reference_id": "binned_depth_width_replacement"
+    }
+  ],
+  "reference_manifest_sha256": "0056c5a7af7a4467df2996cd8edfbbd44dbaf3ad22d6e4015e9290d71e4dfdfa"
+}

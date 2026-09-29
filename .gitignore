@@ -1,0 +1,43 @@
+# Local data, environments and generated outputs
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mpl-cache/
+.ruff_cache/
+.uv-cache/
+data/
+configs/
+output/
+plots/
+checkpoints/
+aim-repo/
+lightning_logs/
+logs/
+local_config.yml
+.DS_Store
+# Credentials and editor/agent state
+.env
+.env.*
+*.pem
+*.key
+.aws/
+.ssh/
+.codex/
+.agents/
+.vscode/
+# LaTeX build products
+manuscript/*.aux
+manuscript/*.bbl
+manuscript/*.blg
+manuscript/*.fdb_latexmk
+manuscript/*.fls
+manuscript/*.log
+manuscript/*.out
+manuscript/*.toc
+manuscript/*.synctex.gz
+manuscript/*.pdf
+!manuscript/complete_observed_cell_ontology_k30.pdf
+
+test/data/
+test/checkpoints/

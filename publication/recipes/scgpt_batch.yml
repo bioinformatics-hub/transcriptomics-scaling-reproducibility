@@ -1,0 +1,287 @@
+source_repository: aim-repo/scgpt_batch
+behavior_evidence: Checked against the archived implementation delivered for this
+  experiment family. Portable synthetic reference cases accompany the release; the
+  detailed source-history mapping is retained in the private research archive.
+behavior_reference_id: binned_batch
+defaults:
+  datamodule:
+    labels: cell_type
+    mask_pct: 0.15
+    mask_strategy: uniform
+    max_val_samples: 30000
+    n_bins: 50
+    normalize_expr_for_ranking: true
+    obs_value_filter: is_primary_data == True
+    selection: active
+  downstream:
+    clustering_method: leiden
+    coarse_k: 30
+    keep_artifacts: false
+    n_neighbors: 15
+    poll_interval_s: 60
+    resolution: 1.0
+    ridge_seed: 0
+  metadata:
+    pipeline: default
+    title: scgpt_batch
+    training_behavior: legacy_padding
+  model:
+    bioformer:
+      chunk_size: 200
+      d_opm: 32
+      d_z: 128
+      gating: false
+      n_heads: 4
+      n_layers: 4
+      norm_first: true
+      pair_updates: true
+    context_length: 256
+    dropout: 0.2
+    freeze_encoder: true
+    from_ckpt: false
+    lr: 0.0003
+    model_class: transformer
+    total_genes: 61497
+    transformer:
+      gating: false
+      n_heads: 4
+      n_layers: 6
+      norm_first: true
+  paths:
+    path_to_aimrepo: output/reproduction/aim-repo/scgpt_batch
+    path_to_celltypes: data/csvs/celltypes.csv
+    path_to_census: data/census/census_data/homo_sapiens
+    path_to_ckpt_dir: output/reproduction/checkpoints
+    path_to_ckpt_file: null
+    path_to_coarse_labels_dir: output/reproduction/coarse_labels
+    path_to_dataset_ids: data/csvs/dataset_ids.csv
+    path_to_finetune_dir: null
+    path_to_hvg: data/csvs/hvg.csv
+    path_to_means: data/csvs/means.csv
+  trainer:
+    accumulate_grad: 1
+    checkpoint_steps: 15000
+    checkpoint: true
+    compute_spearman: false
+    find_lr: false
+    lr_scheduler: onecycle
+    max_time: null
+    n_epochs: 1000
+    n_steps: 15000
+    precision: bf16-mixed
+    resume_dataloader: true
+    resume_training: false
+    training_state_checkpoint_steps: 15000
+    training_state_checkpoint: true
+    val_check_interval: 15000
+runs:
+- source_run_hashes:
+  - 08d29ab4d80f48a0835cd324
+  - 08d29ab4d80f48a0835cd324
+  - bd9d035cc8ef4ca5a74f09b3
+  config:
+    datamodule:
+      batch_size: 128
+    metadata:
+      run_name: d_model_1024-batch_size_128
+    model:
+      d_model: 1024
+- source_run_hashes:
+  - 42f93e77811f40599877b753
+  - 42f93e77811f40599877b753
+  - fbea9ce955d846669bc8c780
+  config:
+    datamodule:
+      batch_size: 16
+    metadata:
+      run_name: d_model_1024-batch_size_16
+    model:
+      d_model: 1024
+- source_run_hashes:
+  - 982a79e8cfb649dd8bd80cd2
+  - 982a79e8cfb649dd8bd80cd2
+  config:
+    datamodule:
+      batch_size: 32
+    metadata:
+      run_name: d_model_1024-batch_size_32
+    model:
+      d_model: 1024
+- source_run_hashes:
+  - cfd7143753fd4498bd2b8517
+  - cfd7143753fd4498bd2b8517
+  config:
+    datamodule:
+      batch_size: 4
+    metadata:
+      run_name: d_model_1024-batch_size_4
+    model:
+      d_model: 1024
+- source_run_hashes:
+  - 0c8ee91f4a404b7fadf54fc4
+  - 753fba63a65443d59e335b11
+  - 753fba63a65443d59e335b11
+  config:
+    datamodule:
+      batch_size: 64
+    metadata:
+      run_name: d_model_1024-batch_size_64
+    model:
+      d_model: 1024
+- source_run_hashes:
+  - 2a2f4d6617d241879ab8347a
+  - 2a2f4d6617d241879ab8347a
+  - 382ec8015bc04af18b003805
+  config:
+    datamodule:
+      batch_size: 128
+    metadata:
+      run_name: d_model_128-batch_size_128
+    model:
+      d_model: 128
+- source_run_hashes:
+  - 6eb269ee187b4fbdb480d0bb
+  - 6eb269ee187b4fbdb480d0bb
+  config:
+    datamodule:
+      batch_size: 16
+    metadata:
+      run_name: d_model_128-batch_size_16
+    model:
+      d_model: 128
+- source_run_hashes:
+  - 15232f92cc0e42efb2579fb6
+  - 15232f92cc0e42efb2579fb6
+  config:
+    datamodule:
+      batch_size: 32
+    metadata:
+      run_name: d_model_128-batch_size_32
+    model:
+      d_model: 128
+- source_run_hashes:
+  - 8570afa174b249d5ba123e68
+  - 8570afa174b249d5ba123e68
+  config:
+    datamodule:
+      batch_size: 4
+    metadata:
+      run_name: d_model_128-batch_size_4
+    model:
+      d_model: 128
+- source_run_hashes:
+  - 3470b55bfb8a481d96caaeab
+  - 824a78b79389464db7350b5b
+  - 824a78b79389464db7350b5b
+  config:
+    datamodule:
+      batch_size: 64
+    metadata:
+      run_name: d_model_128-batch_size_64
+    model:
+      d_model: 128
+- source_run_hashes:
+  - 18f9724ceaad438fa3765f7b
+  - 18f9724ceaad438fa3765f7b
+  - d0cd480226ee4da3b40d161d
+  config:
+    datamodule:
+      batch_size: 128
+    metadata:
+      run_name: d_model_256-batch_size_128
+    model:
+      d_model: 256
+- source_run_hashes:
+  - 638719189dba4eeea2cd2689
+  - 638719189dba4eeea2cd2689
+  config:
+    datamodule:
+      batch_size: 16
+    metadata:
+      run_name: d_model_256-batch_size_16
+    model:
+      d_model: 256
+- source_run_hashes:
+  - 4372bec860c2477899c529b1
+  - 8dd7368a06504ddda11f9b53
+  - 8dd7368a06504ddda11f9b53
+  config:
+    datamodule:
+      batch_size: 32
+    metadata:
+      run_name: d_model_256-batch_size_32
+    model:
+      d_model: 256
+- source_run_hashes:
+  - 0b8bed13d88f46d891e8bc40
+  - 0b8bed13d88f46d891e8bc40
+  config:
+    datamodule:
+      batch_size: 4
+    metadata:
+      run_name: d_model_256-batch_size_4
+    model:
+      d_model: 256
+- source_run_hashes:
+  - 4d3b891977ac485295cd7a0c
+  - 4d3b891977ac485295cd7a0c
+  - 68ec3cf57a1544a4887148c0
+  config:
+    datamodule:
+      batch_size: 64
+    metadata:
+      run_name: d_model_256-batch_size_64
+    model:
+      d_model: 256
+- source_run_hashes:
+  - 844560e89c024181979d670d
+  - 844560e89c024181979d670d
+  config:
+    datamodule:
+      batch_size: 128
+    metadata:
+      run_name: d_model_512-batch_size_128
+    model:
+      d_model: 512
+- source_run_hashes:
+  - 9531ae424ffc48ca873f2e66
+  - 9531ae424ffc48ca873f2e66
+  config:
+    datamodule:
+      batch_size: 16
+    metadata:
+      run_name: d_model_512-batch_size_16
+    model:
+      d_model: 512
+- source_run_hashes:
+  - f7c63d430f7646d8ac5a9d10
+  - f7c63d430f7646d8ac5a9d10
+  config:
+    datamodule:
+      batch_size: 32
+    metadata:
+      run_name: d_model_512-batch_size_32
+    model:
+      d_model: 512
+- source_run_hashes:
+  - 3d519007ee5f417d8b9f514b
+  - 3d519007ee5f417d8b9f514b
+  - c36b7dfcb91e4d5aab62706b
+  config:
+    datamodule:
+      batch_size: 4
+    metadata:
+      run_name: d_model_512-batch_size_4
+    model:
+      d_model: 512
+- source_run_hashes:
+  - 690eceb56707436a80916e13
+  - b01e149575024ee5ad01d3df
+  - b01e149575024ee5ad01d3df
+  config:
+    datamodule:
+      batch_size: 64
+    metadata:
+      run_name: d_model_512-batch_size_64
+    model:
+      d_model: 512

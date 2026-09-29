@@ -1,0 +1,1085 @@
+%Version 3.1 December 2024
+% See section 11 of the User Manual for version history
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                                                 %%
+%% Please do not use \input{...} to include other tex files.       %%
+%% Submit your LaTeX manuscript as one .tex document.              %%
+%%                                                                 %%
+%% All additional figures and files should be attached             %%
+%% separately and not embedded in the \TeX\ document itself.       %%
+%%                                                                 %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%\documentclass[referee,sn-basic]{sn-jnl}% referee option is meant for double line spacing
+
+%%=======================================================%%
+%% to print line numbers in the margin use lineno option %%
+%%=======================================================%%
+
+%%\documentclass[lineno,pdflatex,sn-basic]{sn-jnl}% Basic Springer Nature Reference Style/Chemistry Reference Style
+
+%%=========================================================================================%%
+%% the documentclass is set to pdflatex as default. You can delete it if not appropriate.  %%
+%%=========================================================================================%%
+
+%%\documentclass[sn-basic]{sn-jnl}% Basic Springer Nature Reference Style/Chemistry Reference Style
+
+%%Note: the following reference styles support Namedate and Numbered referencing. By default the style follows the most common style. To switch between the options you can add or remove Numbered in the optional parenthesis. 
+%%The option is available for: sn-basic.bst, sn-chicago.bst%  
+ 
+%%\documentclass[pdflatex,sn-basic]{sn-jnl}% Basic Springer Nature Reference Style/Chemistry Reference Style
+% References are embedded below; suppress the class's automatic BibTeX request.
+\renewcommand{\bibliographystyle}[1]{}
+\documentclass[pdflatex,sn-nature]{sn-jnl}% Nature Portfolio numbered reference style
+\setcitestyle{super}
+%%\documentclass[pdflatex,sn-mathphys-ay]{sn-jnl}% Math and Physical Sciences Author Year Reference Style
+%%\documentclass[pdflatex,sn-aps]{sn-jnl}% American Physical Society (APS) Reference Style
+%%\documentclass[pdflatex,sn-vancouver-num]{sn-jnl}% Vancouver Numbered Reference Style
+%%\documentclass[pdflatex,sn-vancouver-ay]{sn-jnl}% Vancouver Author Year Reference Style
+%%\documentclass[pdflatex,sn-apa]{sn-jnl}% APA Reference Style
+%%\documentclass[pdflatex,sn-chicago]{sn-jnl}% Chicago-based Humanities Reference Style
+
+%%%% Standard Packages
+%%<additional latex packages if required can be included here>
+\usepackage{mathrsfs}%
+\usepackage{graphicx}%
+\usepackage{xurl}% Allow long bibliography URLs to wrap.
+\providecommand{\burl}[1]{\url{#1}}
+\usepackage{caption}%
+\usepackage{afterpage}%
+\usepackage{multirow}%
+\usepackage{amsmath,amssymb,amsfonts}%
+\usepackage{amsthm}%
+%\usepackage{mathrsfs}%
+\usepackage[title]{appendix}%
+\usepackage{xcolor}%
+\usepackage{textcomp}%
+\usepackage{manyfoot}%
+\usepackage{booktabs}%
+\usepackage{algorithm}%
+\usepackage{algorithmicx}%
+\usepackage{algpseudocode}%
+\usepackage{listings}%
+%\usepackage{todonotes}
+%%%%
+
+%%%%%=============================================================================%%%%
+%%%%  Remarks: This template is provided to aid authors with the preparation
+%%%%  of original research articles intended for submission to journals published 
+%%%%  by Springer Nature. The guidance has been prepared in partnership with 
+%%%%  production teams to conform to Springer Nature technical requirements. 
+%%%%  Editorial and presentation requirements differ among journal portfolios and 
+%%%%  research disciplines. You may find sections in this template are irrelevant 
+%%%%  to your work and are empowered to omit any such section if allowed by the 
+%%%%  journal you intend to submit to. The submission guidelines and policies 
+%%%%  of the journal take precedence. A detailed User Manual is available in the 
+%%%%  template package for technical guidance.
+%%%%%=============================================================================%%%%
+
+%% as per the requirement new theorem styles can be included as shown below
+\theoremstyle{thmstyleone}%
+\newtheorem{theorem}{Theorem}%  meant for continuous numbers
+%%\newtheorem{theorem}{Theorem}[section]% meant for sectionwise numbers
+%% optional argument [theorem] produces theorem numbering sequence instead of independent numbers for Proposition
+\newtheorem{proposition}[theorem]{Proposition}% 
+%%\newtheorem{proposition}{Proposition}% to get separate numbers for theorem and proposition etc.
+
+\theoremstyle{thmstyletwo}%
+\newtheorem{example}{Example}%
+\newtheorem{remark}{Remark}%
+
+\theoremstyle{thmstylethree}%
+\newtheorem{definition}{Definition}%
+
+\raggedbottom
+%%\unnumbered% uncomment this for unnumbered level heads
+
+\begin{document}
+
+\title[Scaling recipes for single-cell models]{Scaling recipes for single-cell RNA sequencing foundation models: when do scaling laws hold?}
+
+%%=============================================================%%
+%% GivenName	-> \fnm{Joergen W.}
+%% Particle	-> \spfx{van der} -> surname prefix
+%% FamilyName	-> \sur{Ploeg}
+%% Suffix	-> \sfx{IV}
+%% \author*[1,2]{\fnm{Joergen W.} \spfx{van der} \sur{Ploeg} 
+%%  \sfx{IV}}\email{iauthor@gmail.com}
+%%=============================================================%%
+
+\author*[1,2]{\fnm{Federico} \sur{Borra}}\email{federico.borra@ifom.eu}
+\equalcont{These authors contributed equally to this work.}
+
+\author[1,2]{\fnm{Giacomo} \sur{Cirò}}\email{giacomo.ciro@studbocconi.it}
+\equalcont{These authors contributed equally to this work.}
+
+
+\author[1,2]{\fnm{Arianna} \sur{Castellini}} \email{arianna.castellini2@studbocconi.it}
+
+\author[2]{\fnm{Giovanni} \sur{Gatti}} \email{giovanni.gatti@studbocconi.it}
+
+
+\author[1,2]{\fnm{Andrea} \sur{Tangherloni}}\email{andrea.tangherloni@unibocconi.it}
+\author*[1,2]{\fnm{Francesca Meteora} \sur{Buffa}}\email{francesca.buffa@ifom.eu}
+
+\affil*[1]{\orgdiv{AI \& Systems Biology Lab}, \orgname{IFOM}, \orgaddress{\street{Via Adamello, 16}, \city{Milan}, \postcode{20139}, \state{Lombardy}, \country{Italy}}}
+
+\affil[2]{\orgdiv{Computing Sciences Department}, \orgname{Bocconi University}, \orgaddress{\street{Via Sarfatti, 25}, \city{Milan}, \postcode{20136}, \state{Lombardy}, \country{Italy}}}
+
+
+%%==================================%%
+%% Sample for unstructured abstract %%
+%%==================================%%
+
+\abstract
+{
+Deep learning models exhibit empirical scaling laws whereby performance changes predictably with model size, dataset size, and training compute.
+Although these relationships are well established in domains such as language and image modelling, their applicability to biological data remains unclear.
+Here, we investigate scaling behaviour in foundation models trained on large collections of single-cell transcriptomes. 
+We show that pre-training loss decreases systematically with model capacity and training compute, exhibiting a power-law dependence on model size.
+The strength and regularity of these trends differ between model formulations.
+We identify and quantify empirical relationships linking the optimal learning rate and depth-to-width ratio to model size and depth or compute.
+These results demonstrate that scaling principles extend to transcriptomic modelling.
+More broadly, they provide a quantitative framework for estimating the expected returns from additional resources and selecting suitable hyperparameters and architectures, thereby supporting the development of increasingly capable foundation models for omics data.
+}
+
+\keywords{Transcriptomics, Scaling Laws, Foundation Model, Deep Learning}
+
+\maketitle
+
+\section{Main}\label{sec1}
+
+\begin{center}
+	\centering
+    \makebox[\textwidth][c]{\includegraphics{figures/01_schematic.pdf}}
+    \captionof{figure}{\textbf{Modular data pipeline and model formulations.} \textbf{(A)} CELLxGENE Census data comprising 96,591,226 cells and 61,497 RNA features are converted into paired gene-expression values and gene identifiers. The data module performs formulation-specific gene selection and masking, while retaining the original values or identifiers as prediction targets. \textbf{(B)} The two formulations use a common transformer-encoder architecture but distinct input representations and prediction heads. In the Binned Gene Expression formulation (green), gene identifiers are embedded, and masked expression bins are projected through a feed-forward neural network (FFNN); separate heads predict expression bins using mean squared error (MSE) and gene activity using binary cross-entropy (BCE). In the Ranked Gene Identity formulation (red), gene embeddings are combined with positional encodings representing expression rank, and a gene-identity head reconstructs masked gene identifiers using cross-entropy (CE). The two formulations are trained separately.}
+    \label{fig:01}
+\end{center}
+
+
+The recent success of deep learning across diverse domains, most notably natural language processing and image generation, has been remarkable. 
+Despite these advances, our theoretical understanding of why large models perform so well remains incomplete. 
+Nonetheless, consistent empirical regularities have emerged, enabling quantitative prediction of their performance~\cite{Hestness2017,Kaplan2020,hoffmann2022trainingcomputeoptimallargelanguage}.
+These scaling laws describe how model performance varies as a power-law function of key resources, including dataset size, model size, and training compute, provided that no other factor becomes a limiting bottleneck.
+
+At the same time, advances in single-cell sequencing have transformed the study of cellular biology. Single-cell RNA sequencing (scRNA-seq) enables detailed characterisation of cellular heterogeneity, lineage relationships, and disease-associated transcriptional programmes. 
+Large collaborative initiatives, such as the Human Cell Atlas~\cite{Regev2017}, have produced transcriptomic atlases containing tens of millions of cells, while continued technological advances are broadening the range of molecular modalities that can be measured.
+These rapidly expanding datasets offer unprecedented opportunities to investigate cellular systems at scale, while also presenting substantial computational challenges.
+
+Foundation models pre-trained on large-scale datasets have recently emerged as a promising means of harnessing the growing volume of biological data~\cite{Theodoris2023,Cui2024}.
+Across other domains, transformer-based models have demonstrated an ability to learn general-purpose representations that can be adapted to a wide range of downstream tasks~\cite{Brown2020}.
+Building on this paradigm, several foundation models for transcriptomic data have recently been introduced, including Geneformer and scGPT, which learn representations of genes and cells from extensive collections of single-cell expression profiles.
+
+Very recently, there has been a shift towards characterising these scaling laws in single-cell foundation models~\cite{Hao2024,Fischer2024,Rizvi2025,Adduri2025,Gandhi2025,Dong2026,Chen2026,DenAdel2026}.
+Existing analyses, however, remain partial: they are often qualitative, focus on a single model architecture, and primarily examine scaling with computational resources, with limited consideration as to how scaling behaviour can inform hyperparameter selection.
+In this work, we take a step towards a more comprehensive examination of the scaling behaviour of transcriptomics foundation models. 
+We develop a standardised pipeline that enables controlled and fair comparisons across multiple experimental axes. 
+Its modular design allows preprocessing strategies, pre-training objectives, loss functions, and model architectures to be varied independently, while holding other conditions fixed, including the underlying data and the randomised order in which samples are presented to the models.
+
+Finally, we assess whether improvements in pre-training loss translate into better downstream performance, considering cell-type classification, cross-dataset mixing, and, more broadly, the quality of the learned representations as measured by their clustering properties.
+Through quantitative analysis, we empirically demonstrate that scaling behaviour occurs in single-cell foundation models and characterise it using scaling coefficients. 
+We further show that similar regularities arise not only under resource scaling (e.g., increasing the number of parameters or the amount of compute), but also when varying other hyperparameters and architectural properties, including the learning rate and depth-to-width ratio.
+Although scaling behaviour has previously been demonstrated in large language models, we find that some scaling coefficients differ in magnitude from those reported for language models and that, in one case, the sign of the coefficient is reversed.
+
+These findings highlight the importance of comprehensively characterising a model’s scaling behaviour before committing to large-scale training, particularly when scaling laws are used to guide architectural decisions and optimise the resources required to achieve a target level of performance.
+
+\section{Results}
+\subsection{Scaling Laws at Different Context Lengths}
+
+\begin{center}
+	\centering
+    \makebox[\textwidth][c]{
+    \includegraphics{figures/02_batch_size_scaling.pdf}}
+    \captionof{figure}{\textbf{Training loss dynamics across batch sizes.} Exponentially smoothed training loss (\(\alpha=0.05\)) over 15,000 optimiser steps for \textbf{(A)} the Ranked Gene Identity formulation, evaluated using masked-token cross-entropy, and \textbf{(B)} the Binned Gene Expression formulation, evaluated using expression-head MSE on masked positions with non-zero targets. All models used a context length of 256, six transformer blocks, four attention heads, embedding dimensions of 128, 256, 512, or 1,024, and physical and effective batch sizes of 4, 16, 32, 64, or 128, without gradient accumulation. Colour denotes batch size, and shade denotes embedding dimension; lower values indicate better training performance.}
+    \label{fig:02}
+\end{center}
+
+We trained a broad range of models on the CELLxGENE Census~\cite{CZI2023} using two model formulations: (\textit{i}) Ranked Gene Identity prediction, following a Geneformer-like approach and optimised using masked-token cross-entropy; and (\textit{ii}) Binned Gene Expression prediction, following an scGPT-like approach and jointly optimised using expression MSE and gene-activity BCE.
+
+Figure~\ref{fig:02} shows that training loss decreased across the tested batch sizes and model widths for both formulations, indicating stable optimisation throughout the explored range.
+At a fixed optimiser step, loss was generally lower for larger batches and wider models.
+However, because larger batches process more cells and incur more training compute per step, these comparisons do not isolate the effect of gradient noise or identify a critical batch size.
+
+We selected a batch size of 32 for the subsequent experiments as a practical compromise between per-step memory requirements and the number of cells processed per update, and held it fixed throughout the principal sweeps.
+
+\afterpage{%
+\begin{center}
+	\centering
+    \makebox[\textwidth][c]{\includegraphics{figures/03_scaling_and_BIOscore.pdf}}
+    \captionof{figure}{\textbf{Scaling of pre-training loss and downstream BIOscore with model size and context length.} \textbf{(A, C)} Pre-training loss as a function of non-embedding parameters, \(N\), for Ranked Gene Identity prediction measured by cross-entropy \textbf{(A)} and Binned Gene Expression prediction measured by MSE \textbf{(C)}. Each subplot corresponds to a different context length (128-2,048), and marker shading indicates the depth-to-width ratio. Solid lines show log-log fits of the scaling law \(L \propto N^{-k}\). Crosses and diamonds denote the predicted and observed losses, respectively, for the target model, while dotted lines indicate the prediction gap. \textbf{(B, D)} Downstream BIOscore trajectories over 50,000 training steps for the Ranked Gene Identity \textbf{(B)} and Binned Gene Expression \textbf{(D)}. Colour denotes context length, and darker shades indicate higher non-embedding parameter count. Ranked Gene Identity exhibits stronger loss scaling than Binned Gene Expression, while BIOscore trajectories show how these pre-training trends translate into the quality of learned representations.}
+    \label{fig:03}
+\end{center}%
+}
+
+Figure~\ref{fig:03}A shows that the rank-based model exhibits scaling behaviour at every context length tested.
+Cross-entropy loss decreases smoothly with the number of non-embedding parameters, producing an approximately linear relationship on log–log axes. 
+In addition, the fitted scaling exponent increases monotonically with context length, from \(k=0.022\) at a context length of 128 to \(k=0.092\) at a context length of 2,048. 
+This indicates that additional model capacity becomes increasingly beneficial as more genes are included in the input context.
+
+This result is intuitive: longer contexts provide more information for the model to learn complex relationships among genes. 
+In the limit case of a context length of one, the model has no neighbouring genes from which to infer higher-order relationships. 
+Once the marginal gene statistics have been captured, additional model capacity should therefore provide little benefit, and scaling is expected to be negligible.
+
+By contrast, the Binned Gene Expression model exhibits substantially weaker and less consistent scaling behaviour (Figure~\ref{fig:03}C).
+Although the mean squared error (MSE) generally decreases with model size, the fitted coefficients are small and do not increase monotonically with context length. 
+Instead, the principal effect of increasing the context length appears to be a reduction in the dispersion of the observed losses around the fitted power-law trajectory.
+
+Because the two formulations use different loss functions (i.e., cross-entropy for Ranked Gene Identity prediction and MSE for Binned Gene Expression prediction), the absolute loss values are not directly comparable. 
+We therefore focus on the fitted scaling coefficients and the consistency of the observed scaling trends rather than on the magnitudes of the losses.
+
+\subsubsection{Downstream Performance}
+
+To assess whether reductions in pre-training loss translate into improved downstream performance, Figures~\ref{fig:03}B and~\ref{fig:03}D report the results of our evaluation procedure.
+We summarise performance using BIOscore, a custom composite metric that combines the classification accuracy of a ridge-regularised linear probe on coarse cell-type labels with several clustering-quality metrics computed from the cell embeddings using both the fine-grained labels provided by CELLxGENE and a coarse-grained version derived from them (Sections~\ref{sec:coarse} and~\ref{sec:down}).
+The clustering components of BIOscore exhibited broadly concordant trends across training and model configurations, while label ASW showed a different context-length dependence.
+We therefore aggregated them into a single composite score to provide a compact visualisation, while reporting the component metrics separately in the Supplementary Information.
+
+These results provide indicative, rather than definitive, evidence of an association between pre-training and downstream performance.
+Previous work has shown, for instance, that single-cell foundation models do not consistently outperform simpler baselines~\cite{Kedzierska2025,AhlmannEltze2025,DenAdel2026}.
+%(in static cell-type and batch correction settings, akin to ours, or to dynamic perturbation response prediction behaviour).
+It is unclear whether this is due to task saturation, ill-defined or noisy objectives, or limitations of the foundation models themselves.
+With this experiment, however, we are interested in the trend of improvement in the downstream tasks rather than in absolute performance.
+As training progresses and pre-training loss decreases, the BIOscore generally increases. 
+The learned representations also tend to improve with model size and context length.
+
+These trends should be interpreted with caution, as several confounding factors remain. 
+In particular, embedding dimensionality increases with model width, with immediate and sizeable repercussions for the linear probe's expressive power. There is, in fact, a linear relationship between the number of parameters in the linear probe and the embedding dimensionality.
+This gives wider models an advantage under this evaluation protocol. 
+As a consequence, part of the apparent improvement with model size may reflect differences in embedding dimensionality rather than representational quality alone.
+
+Finally, the two model families reach comparable BIOscores, particularly at longer context lengths. 
+Within the range of model sizes and compute budgets considered here, neither formulation therefore exhibits a consistent advantage in downstream performance.
+This conclusion is limited to the scales and evaluation procedure examined in this study.
+
+
+\subsection{Optimal Learning Rate Scaling}
+
+We perform an extensive sweep to determine the optimal learning rate across combinations of parameter count and model depth for both the Ranked Gene Identity and Binned Gene Expression formulations.
+Figures~\ref{fig:04}A and~\ref{fig:04}D show that, at any fixed depth, the optimal learning rate decreases with the number of non-embedding parameters according to an approximate power law.
+
+At the shown compute slice, the magnitudes of the fitted size exponents, \(\lvert\alpha_N\rvert\), range from \(0.16\) to \(0.33\) for the Ranked Gene Identity model and from \(0.33\) to \(0.55\) for the Binned Gene Expression model.
+These magnitudes exceed the local effective exponent magnitude of approximately $0.14$ implied by Kaplan et al.'s language-model learning-rate heuristic near $N=10^7$ non-embedding parameters~\cite{Kaplan2020}.
+Although Kaplan's effective exponent varies with model size, this local contrast highlights the importance of estimating learning-rate scaling directly in each modelling setting.
+
+Looking at the same results by model depth, while holding the parameter count approximately constant, reveals a different trend (Figures~\ref{fig:04}B and~\ref{fig:04}E).
+For the Ranked Gene Identity model, the optimal learning rate generally increases with depth, with positive fitted depth exponents, \(\alpha_D\), ranging from \(0.06\) to \(0.79\).
+This direction is the reverse of that reported for language models, where the optimal learning rate decreases with depth \cite{yang2024tensor, ren2026rethinkinglanguagemodelscaling}.
+It should be noted that settings differ in residual scaling, optimiser, and width/depth controls, so this contrast does not isolate a biological-domain effect. 
+For the Binned Gene Expression model, however, the dependence is less consistent and varies with the target parameter count. 
+Specifically, \(\alpha_D\) ranges from \(-1.05\) to \(0.98\), and the optimal learning rate decreases with depth at the 10-million-parameter target.
+These results indicate that parameter count alone is insufficient to determine the optimal learning rate. 
+Indeed, both model depth and model formulation must be considered.
+
+\begin{center}
+	\centering
+    \makebox[\textwidth][c]{\includegraphics{figures/04_learning_rate_scaling.pdf}}
+    \captionof{figure}{\textbf{Scaling of the optimal learning rate with model size, depth, and training compute.} Results are shown for the Ranked Gene Identity formulation (A–C) and the Binned Gene Expression formulation (D–F). \textbf{(A, D)} Optimal learning rate as a function of the number of non-embedding parameters at the last analysed compute slice, corresponding to 75\% of the total training budget (\(5.25\times10^{17}\) FLOPs for Ranked Gene Identity prediction and \(1.05\times10^{17}\) FLOPs for Binned Gene Expression prediction). Colours denote model depth. \textbf{(B, E)} Optimal learning rate as a function of depth for models matched to non-embedding-parameter targets ranging from 1 million to 1 billion. Colours denote the target parameter count. Solid lines connect the estimated optima, dotted lines show the corresponding power-law fits, and the fitted size and depth exponents, \(\alpha_N\) and \(\alpha_D\), are reported beside the corresponding curves. Circles indicate optima estimated by quadratic approximation, whereas squares identify sampled optima retained because the winner was at a search boundary or did not have a complete eligible three-point fitting window. \textbf{(C, F)} In-sample fit error of four learning-rate scaling rules across compute slices: a constant learning rate, scaling with non-embedding parameter count only (\(N\)-only), scaling with depth only (\(D\)-only), and joint scaling with both non-embedding parameter count and depth (\(N+D\)). Error is measured as the root-mean-square residual in \(\log_{10}\) learning rate (dex) on the architecture points used to fit each rule; lower values indicate a closer in-sample fit. Across both formulations, the joint \(N+D\) model generally provides the most accurate description, indicating that optimal learning-rate selection depends on both model size and architectural shape.}
+    \label{fig:04}
+\end{center}
+
+A joint power law incorporating both model depth and parameter count provides a more accurate characterisation of optimal learning-rate scaling than either variable alone, as shown in Figures~\ref{fig:04}C and~\ref{fig:04}F.
+We therefore use this joint relationship in the analyses that follow.
+
+The difference in fit quality between the two formulations is nevertheless substantial.
+At the highlighted compute slice, the joint power law achieves an RMSE of approximately \(0.15\) dex for the Ranked Gene Identity model, compared with approximately \(0.38\) dex for the Binned Gene Expression model.
+
+Since the error is measured on a logarithmic scale, this corresponds to a substantially smaller deviation for the Ranked Gene Identity model than for the Binned Gene Expression model.
+An RMSE of 0.15 dex corresponds to a characteristic multiplicative factor of \(10^{0.15} \approx 1.41\), equivalent to deviations of approximately +41\% or -29\% from the optimum.
+By comparison, an RMSE of 0.38 dex corresponds to a factor of \(10^{0.38} \approx 2.40\), or approximately +140\% and -58\%.
+
+This higher residual error provides further evidence that the Binned Gene Expression model exhibits less regular scaling behaviour than the Ranked Gene Identity model, consistent with the trends observed in Figure~\ref{fig:03}.
+
+\subsection{Depth Scaling with Compute Budget}
+
+Having established a scaling law for the optimal learning rate, we use it to investigate how optimal model depth varies with model size. 
+We evaluate a denser grid of depths at approximately logarithmically spaced non-embedding parameter targets ranging from 1 million to 1 billion. 
+The joint size/depth learning-rate rules used to launch these runs are specified in Methods (Section~\ref{sec:quad}).
+
+\begin{center}
+	\centering
+    \makebox[\textwidth][c]{\includegraphics{figures/05_depth_width_scaling.pdf}}
+    \captionof{figure}{\textbf{Loss-surface modelling and estimation of compute-optimal model shape.} Results are shown for the Ranked Gene Identity formulation (A–C) and the Binned Gene Expression formulation (D–F). \textbf{(A, D)} Training loss as a function of cumulative compute for models ranging from 1 million to 1 billion non-embedding parameters. Colour denotes model size, diamonds indicate the end of learning-rate warm-up, and vertical dotted lines mark the isoFLOP slices used to construct the loss surfaces. \textbf{(B, E)} Held-out predictive performance of the fitted loss surfaces under random five-fold cross-validation and leave-one-compute-slice-out validation. Each point compares predicted and observed loss for one architecture at one compute slice (256 ranked and 230 binned observations) and is coloured by training compute; dashed lines indicate perfect agreement. The corresponding \(R^2\) and root MSE (RMSE) values are reported in each panel. \textbf{(C, F)} Predicted optimal depth-to-width ratio as a function of the target non-embedding parameter count at three compute budgets. Solid lines show the estimated optima, and shaded regions represent the 5th–95th percentiles from 250 bootstrap resamples of surface observations at each compute budget, retaining convex fits. These bands quantify surface sensitivity rather than variability across independent training runs. Horizontal dotted lines delimit the range of architectural ratios represented in the experiments, while triangles identify predictions below or above this observed range. The Ranked Gene Identity loss surface yields accurate held-out predictions and stable architectural optima, whereas the Binned Gene Expression surface exhibits lower predictive accuracy and substantially greater uncertainty, indicating that its optimal model shape is less reliably identifiable.}
+    \label{fig:05}
+\end{center}
+
+
+We fit a quadratic response surface that models pre-training loss jointly as a function of parameter count, training compute, and depth-to-width ratio (as detailed in Methods; Section~\ref{sec:quad}, extending prior approaches in neural scaling literature such as quadratic isoFLOP profiles or multidimensional loss surfaces~\cite{hoffmann2022trainingcomputeoptimallargelanguage, Abnar2025}).
+
+For the Ranked Gene Identity model, the fitted surface indicates that the optimal depth-to-width ratio decreases as model size increases at fixed compute, favouring relatively wider models. 
+Conversely, at a fixed parameter count, the optimal ratio increases with the compute budget, favouring relatively deeper models. 
+Within the scaling regime covered by our experiments, this surface therefore provides an empirical rule for selecting model depth and width for a given parameter count and compute budget to minimise the predicted loss.
+
+For the Binned Gene Expression model, however, the full quadratic response surface provides a substantially poorer description of the data.
+First, its held-out predictions exhibit greater dispersion (Figure~\ref{fig:05}E) than those of the Ranked Gene Identity model (Figure~\ref{fig:05}B).
+The \(R^2\) values decrease from \(0.985\) to \(0.864\) under random five-fold cross-validation and from \(0.983\) to \(0.858\) under leave-one-compute-slice-out validation.
+The optimum inferred for the Binned Gene Expression model is also more sensitive to bootstrap resampling.
+Comparing Figures~\ref{fig:05}C and~\ref{fig:05}F, the Ranked Gene Identity model produces more concentrated estimates of the optimal depth-to-width ratio. At 100 million parameters and $10^{18}$ FLOPs, the central 95\% bootstrap interval spans approximately 0.42 orders of magnitude for the ranked model and 1.79 orders of magnitude for the binned model (Supplementary Information, Section~6).
+For the binned model, 4 of 250 bootstrap-fitted surfaces (1.6\%) are non-convex in the log-ratio direction and therefore do not yield a stationary minimum, compared with none for the ranked model.
+Consequently, the ranked surface supports a provisional architectural rule within the sampled regime, whereas the binned surface supports a less precise optimum and we do not use it to prescribe a depth-to-width rule.
+The validation schemes retain observations from the same training runs across folds, so they do not establish generalisation to independently trained, unseen architectures.
+
+These results emphasise the empirical nature of scaling behaviour. A model formulation may offer an important practical advantage not only through its absolute performance, but also through the regularity and predictability of its scaling relationships, which enable more reliable hyperparameter selection and extrapolation.
+
+
+\begin{center}
+	\centering
+    \makebox[\textwidth][c]{\includegraphics{figures/06_geneformer_surface_contours.pdf}}
+    \captionof{figure}{\textbf{Two-dimensional slices through the quadratic loss surface fitted for the Ranked Gene Identity formulation.} The surface models pre-training loss jointly as a function of non-embedding parameter count, training compute, and depth-to-width ratio. \textbf{(A)} Fitted loss as a function of non-embedding parameter count and depth-to-width ratio at four fixed compute budgets, ranging from \(3.00\times10^{15}\) to \(1.00\times10^{18}\) FLOPs. \textbf{(B)} Fitted loss as a function of training compute and depth-to-width ratio at fixed non-embedding-parameter targets of 1 million, 10 million, 100 million, and 1 billion. Orange dashed lines trace the depth-to-width ratio that minimises the fitted loss at each parameter count or compute budget. \textbf{(C)} Fitted loss as a function of non-embedding parameter count and training compute at three fixed depth-to-width ratios. White circles denote observed training configurations, contour lines connect configurations with equal predicted loss, and colour indicates the fitted loss, with lighter shades corresponding to lower values. All axes are logarithmic. The fitted surface predicts that the optimal depth-to-width ratio decreases with parameter count at fixed compute but increases with the available compute at fixed parameter count, favouring relatively wider models as model size grows and relatively deeper models as the training budget increases.}
+    \label{fig:06}
+\end{center}
+
+Figure~\ref{fig:06} shows contours of the fitted quadratic response surface for the Ranked Gene Identity model.
+We omit the corresponding contour projections for the Binned Gene Expression model because its lower predictive accuracy and broader optimum intervals limit their use as an architectural prescription.
+The predicted optimal depth-to-width ratio is overlaid on each surface slice, together with the observed configurations used to fit the surface where applicable.
+
+
+\section{Discussion}
+Our results show that foundation models trained on single-cell transcriptomic data can exhibit scaling behaviour similar to that observed in language, vision, and audio models. 
+In particular, the Ranked Gene Identity model displays a predictable improvement in pre-training loss as model size and compute increase. 
+This regularity is encouraging because, within the regime examined, it enables estimation of the expected benefit of additional resources before committing to large-scale training. 
+However, the weaker, less stable scaling observed in the Binned Gene Expression model suggests that this behaviour cannot be assumed to hold equally across model formulations.
+
+The regularities identified here extend beyond resource variables (e.g., parameter count and training compute) to include optimisation hyperparameters and architectural choices. 
+In particular, the optimal learning rate depends systematically on model size and depth, while the fitted response surface for the Ranked Gene Identity model relates the optimal depth-to-width ratio to both parameter count and compute. 
+Such relationships are especially valuable at large scales, where exhaustive trial-and-error optimisation becomes prohibitively expensive. 
+Conversely, using poorly tuned hyperparameters can waste substantial computational resources and yield suboptimal performance despite an otherwise sufficient training budget.
+
+The workflow introduced in this study also provides a practical means of reducing the complexity of hyperparameter optimisation. 
+Rather than evaluating every combination in an exhaustive Cartesian grid, the search can be decomposed into lower-dimensional sweeps whose results are subsequently combined through joint scaling laws and response surfaces. 
+This factorised approach replaces a search whose cost grows multiplicatively across hyperparameter axes with a sequence of more tractable empirical estimation problems.
+
+Although we demonstrate these properties using models of static single-cell transcriptomic states, the same methodology could be particularly valuable for perturbation-response models. 
+If similar scaling regularities hold, empirical scaling laws could help determine suitable architectures, hyperparameters, and training budgets for increasingly ambitious models of cellular behaviour. 
+Such an application requires at least two conditions: (\textit{i}) the training objective must align closely with the biological behaviour of interest, and (\textit{ii}) the task must be sufficiently complex and informative to benefit from substantial model capacity. 
+Under these conditions, the approach developed here could contribute to the design of future ``virtual cell'' models.
+
+Analogous procedures may also apply to other data-intensive areas of biomedicine. 
+Potential examples include models of histopathological images, spatial omics data, biomolecular structures, and multimodal clinical records. 
+These settings often require substantial model capacity and computational investment, making reliable estimates of scaling behaviour and optimal hyperparameters especially valuable.
+
+An important open question is why Ranked Gene Identity prediction exhibits substantially more regular scaling than Binned Gene Expression prediction. 
+A controlled interpolation between the two representations, for example, by progressively refining the expression discretisation towards a rank-based representation, could help determine whether the difference arises primarily from the input representation, the prediction objective, or their interaction.
+
+The principal limitations of this approach are its empirical and setting-specific nature. 
+The fitted relationships provide no guarantee that observed trends will continue arbitrarily far beyond the range of model sizes and compute budgets examined. 
+Moreover, the scaling coefficients depend on the data, preprocessing procedure, pre-training objective, architecture, optimiser, and evaluation protocol. 
+As demonstrated by the contrasting behaviour of the two models studied here, some formulations are considerably more amenable to scaling analysis than others, and the resulting laws are unlikely to transfer unchanged to new configurations. 
+Scaling laws should therefore be treated as locally validated empirical models and reassessed at intermediate scales before they are used to guide substantially larger training runs. 
+Future work could also investigate whether combining this empirical framework with parameterisation-based hyperparameter-transfer methods improves its reliability and portability~\cite{yang2022tensorprogramsvtuning,yang2024tensor,mlodozeniec2026completed,ren2026rethinkinglanguagemodelscaling}.
+
+
+\section{Methods}
+\label{sec:methods}
+
+\subsection{Study design}
+
+We developed a common training and evaluation pipeline to study empirical scaling relationships in transformer encoders trained on scRNA-seq profiles.
+The pipeline held the data source, cell split, sampling procedure, optimiser family, and evaluation protocol fixed while varying the input representation, pre-training objective, context length, encoder width, encoder depth, learning rate, and training budget.
+We studied two formulations: \textit{(i)} masked gene identity prediction from expression-ranked gene sequences (the Ranked Gene Identity formulation), and \textit{(ii)} joint prediction of masked gene activity and binned expression (the Binned Gene Expression formulation).
+The two formulations shared the same encoder implementation but used representation-specific input modules and output heads.
+
+The experimental grids and compute budgets were chosen pragmatically within available computational resources, without a formal statistical power calculation.
+Model identities were known during analysis; blinding was not used.
+Unless stated otherwise, each architecture was trained once.
+The absence of independent training-seed replicates means that the uncertainty estimates reported below quantify sensitivity to sampled architectures or surface observations, rather than variation across model initialisations.
+
+\subsection{Single-cell data and data splits}
+
+Experiments used the human RNA measurement from a local TileDB-SOMA copy of the 8 November 2025 CELLxGENE Census release (release identifier \texttt{2025-11-08}).
+We retained observations that satisfied \texttt{is\_primary\_data == True} and read the \texttt{normalized} expression layer.
+This filter yielded 96,591,226 cells across 61,497 RNA features.
+No additional cell-level quality-control filter, gene filter, or selection of highly variable genes was applied.
+Gene tokens were zero-based indices into the complete Census RNA feature ordering, whose feature identifiers were Ensembl gene identifiers.
+
+Cells were divided once into training, validation, and test partitions with \texttt{tiledbsoma\_ml.ExperimentDataset.random\_split} and seed 42.
+Each was capped at 30,000 cells by reducing its fraction size as needed, with the remainder assigned to training.
+The resulting partitions contained 96,531,226 training cells, 30,000 validation cells, and 30,000 reserved test cells.
+The split was performed at the cell level without stratification or grouping by source dataset or donor so that a source dataset could contribute cells to multiple partitions.
+The test partition was reserved but not used in the analyses reported here.
+Training observations were shuffled by TileDB-SOMA using seed 42, an I/O batch size of 65,536 observations, and shuffle chunks of 64 observations.
+All model families used the same split and shuffle seed.
+Cells were sampled according to their natural frequency in the filtered Census, without reweighting or balancing by dataset, tissue, donor, or cell type.
+No process-wide random seed was set by the training entry point or cluster launch scripts.
+Consequently, PyTorch~\cite{paszke2019pytorchimperativestylehighperformance} model initialisation and dropout, together with NumPy-based~\cite{harris2020array} gene subsampling and masking, depended on the generator states initialised separately in each process and were not exactly reproducible from the experiment configuration alone.
+
+Cell-type strings, Cell Ontology~\cite{Bard2005} term identifiers, and source-dataset identifiers were retained for downstream evaluation.
+The dataset of origin was used as the batch label, due to the absence of more granular information.
+Fine cell-type labels were the CELLxGENE annotations.
+
+\subsubsection{Ontology-derived coarse cell-type labels}
+\label{sec:coarse}
+
+Coarse cell types were a study-specific reduction of the fine CELLxGENE annotations, rather than a field supplied by CELLxGENE.
+The mapping was constructed from the Cell Ontology term frequencies in the fixed 30,000-cell validation partition and was then held constant across model checkpoints and formulations.
+The validation partition contained 631 distinct input labels, including the special label \texttt{unknown}.
+We parsed the 17 March 2026 release of the Cell Ontology (\texttt{cl.owl}; ontology version \texttt{2026-03-17}) and retained explicit Cell Ontology to Cell Ontology \texttt{rdfs:subClassOf} relations.
+Multiple-parent relations were retained, so the resulting structure was treated as a directed acyclic graph rather than as a single-parent tree.
+
+We reduced the observed ontology terms to \(G=30\) anchors with a deterministic, frequency-adaptive bottom-up procedure, where \(G\) denotes the target number of coarse groups.
+Labels equal to \texttt{unknown}, \texttt{na}, or missing were omitted when fitting the reduction.
+Initially, every observed fine term was its own anchor.
+For each term, ontology depth was defined as the minimum number of subclass edges from any ontology root.
+Two counts were then maintained: a local count, equal to the number of validation cells currently assigned to an anchor, and a global propagated count, obtained by adding each fine term's count to that term and to each of its unique ancestors.
+
+While more than 30 anchors remained, the movable anchor with the smallest local cell count was selected for ascent.
+Ties were resolved first in favour of the deeper term and then by lexicographic Cell Ontology identifier.
+If the selected term had multiple direct parents, its parent was selected by the following ordered criteria: (i) a parent already present among the current anchors; (ii) a parent that was an ancestor of another current anchor; or (iii) any remaining direct parent.
+Within each class, the parent with the largest global propagated count was selected, with Cell Ontology identifier as the final deterministic tie-breaker.
+The selected anchor was replaced by that parent, and every original fine term assigned to the selected anchor was reassigned to the parent.
+This process was repeated until 30 ontology anchors remained.
+No ontology nodes were excluded from eligibility as anchors in the analysis reported here.
+
+Algorithm~\ref{alg:ontology-reduction} gives a conceptual specification of the reduction.
+The tuples in the two minimisation steps encode the deterministic tie-breaking rules described above.
+
+\begin{algorithm}[t]
+\caption{Frequency-adaptive reduction of fine Cell Ontology terms}
+\label{alg:ontology-reduction}
+\begin{algorithmic}[1]
+\Require Cell-level fine terms \(\mathbf{y}\), ontology parent relation \(\mathrm{Pa}\), target group count \(G\)
+\State Remove special labels \(\{\texttt{unknown},\texttt{na},\mathrm{missing}\}\) from \(\mathbf{y}\)
+\State Let \(\mathcal{T}\) be the observed fine terms and \(n_\tau\) the cell count of \(\tau\in\mathcal{T}\)
+\State Initialise anchors \(\mathcal{A}\gets\mathcal{T}\) and mapping \(\phi(\tau)\gets \tau\)
+\State Compute minimum root depth \(d(v)\) for each ontology term \(v\)
+\State \(h(v)\gets\sum_{\tau:\,v=\tau\ \mathrm{or}\ v\in\mathrm{Anc}(\tau)} n_\tau\)
+    \Comment{Globally propagated count}
+\While{\(\lvert\mathcal{A}\rvert>G\)}
+    \State \(r(a)\gets\sum_{\tau:\,\phi(\tau)=a}n_\tau\) for every \(a\in\mathcal{A}\)
+        \Comment{Current local count}
+    \State \(\mathcal{C}\gets\{a\in\mathcal{A}:\mathrm{Pa}(a)\neq\varnothing\}\)
+    \If{\(\mathcal{C}=\varnothing\)}
+        \State \textbf{break}
+    \EndIf
+    \State \(u\gets\arg\min_{a\in\mathcal{C}}\bigl(r(a),-d(a),a\bigr)\)
+        \Comment{Promote the least-supported anchor}
+    \For{\(p\in\mathrm{Pa}(u)\)}
+        \State \(q(p)\gets 0\) if \(p\in\mathcal{A}\)
+        \State \(q(p)\gets 1\) else if \(p\in\mathrm{Anc}(a)\) for some \(a\in\mathcal{A}\setminus\{u\}\)
+        \State \(q(p)\gets 2\) otherwise
+    \EndFor
+    \State \(p^\star\gets\arg\min_{p\in\mathrm{Pa}(u)}\bigl(q(p),-h(p),p\bigr)\)
+    \State \(\mathcal{A}\gets(\mathcal{A}\setminus\{u\})\cup\{p^\star\}\)
+    \State Set \(\phi(\tau)\gets p^\star\) for every \(\tau\) such that \(\phi(\tau)=u\)
+\EndWhile
+\State \Return fine-to-coarse mapping \(\phi\) and final anchors \(\mathcal{A}\)
+\end{algorithmic}
+\end{algorithm}
+
+The procedure produced 30 ontology-derived labels plus \texttt{unknown}.
+Because observed frequencies and direct-parent choices drove the ascent, the final anchors could occur at different ontology depths, and one retained anchor could be an ancestor of another; this is therefore a frequency-adaptive ontology reduction, not a fixed-depth or antichain cut.
+This unequal resolution was intentional: well-supported granular populations could remain separate, whereas less-supported populations were promoted to broader ontology terms.
+Here, support was relative to the other anchors during reduction at fixed \(G\), rather than an absolute minimum-cell threshold.
+When both an ancestor and one of its descendants were retained, the ancestor label represented only the residual fine terms assigned to that anchor, rather than the complete ontological extension of the ancestor.
+For all coarse-label analyses, cells mapped to \texttt{unknown} or the fallback label \texttt{other} were removed.
+In the validation partition, 748 cells were labelled \texttt{unknown}; consequently, 29,252 cells contributed to coarse-label metrics.
+
+\subsection{Input construction and masking}
+
+\subsubsection{Ranked Gene Identity formulation}
+
+For each cell, expression values were first divided by their sum.
+To construct the ranking statistic, each gene's within-cell relative expression was then divided by its mean non-zero relative expression across all filtered Census observations; this statistic was precomputed before the train/validation/test split.
+Genes with a corpus mean numerically equal to zero were assigned a denominator of one.
+Expressed genes were ranked in decreasing order of this normalised statistic.
+When a cell contained more expressed genes than the context length, expressed genes were randomly subsampled to the requested length and then restored to their global expression-rank order.
+Cells with fewer expressed genes were padded to the context length.
+
+We evaluated nominal context lengths of 128, 256, 512, 1,024, and 2,048 tokens.
+At each iteration, 15\% of non-padding gene tokens were independently selected with uniform probability and replaced by a learned mask token.
+The model predicted the original gene identity at masked positions using categorical cross-entropy over the 61,497 genes plus special tokens.
+
+The rank of each selected gene in the full within-cell gene ordering was supplied through a sinusoidal positional encoding.
+Padding positions were assigned no positional signal.
+
+\subsubsection{Binned Gene Expression formulation}
+\label{sec:binned-loss}
+
+For each cell, zero expression values were retained as bin 0.
+Non-zero values were discretised by comparison with 50 within-cell quantiles, producing integer expression targets from 1 to 50.
+A context contained approximately \((1-m/2)S\) expressed genes (when available) and \((m/2)S\) unexpressed genes, where \(S\) is the context length and \(m=0.15\) is the masking probability.
+In the context-length/model-size, learning-rate and batch-size sweeps, the two requested counts were independently rounded down, giving effective sequence lengths of 127, 255, 511, 1,023, and 2,047 positions for nominal context lengths of 128, 256, 512, 1,024, and 2,048, respectively.
+The replacement binned depth/width sweep used the corrected constructor: the unexpressed count was rounded down and the expressed count filled the remaining slots, preserving all 256 positions at nominal context 256.
+Expressed and unexpressed candidates were randomly sampled when more candidates were available than required.
+Each selected position was subsequently masked independently with probability 0.15 by replacing its expression input with \(-1\); gene identifiers remained visible.
+The earlier binned implementation could also select padded positions for masking; the replacement depth/width sweep excluded padding from masking and attention.
+
+The binned model used two prediction heads and two activity-selection conventions across the experimental stages.
+In the context-length/model-size and learning-rate sweeps, the expression head was trained on masked positions classified as active by the activity head, using a probability threshold of 0.5.
+In the batch-size and depth/width sweeps, expression loss was evaluated on masked positions with non-zero target expression.
+Writing $\mathcal{M}$ for the masked positions, $x_i$ for the target expression bin, and $p_i$ for the predicted activity probability, the two selected sets were
+\begin{equation}
+    \mathcal{S}_{\mathrm{pred}}=\{i\in\mathcal{M}:p_i>0.5\},
+    \qquad
+    \mathcal{S}_{\mathrm{target}}=\{i\in\mathcal{M}:x_i>0\}.
+\end{equation}
+The expression loss was
+\begin{equation}
+    L_{\mathrm{expr}}
+    = \frac{1}{|\mathcal{S}|}
+      \sum_{i\in\mathcal{S}}{(\hat{x}_i-x_i)}^2,
+\end{equation}
+with $\mathcal{S}$ chosen according to the experimental stage above.
+The prediction-based selection used a hard threshold, without differentiating through the selection decision.
+A second head predicted whether each masked gene was active using binary cross-entropy, $L_{\mathrm{act}}$.
+In the context-length/model-size and learning-rate sweeps, the recorded activity loss additionally contained a parameter-independent contribution from unmasked positions; its exact form is given in Supplementary Information, Section~7.
+Training summed the expression and activity terms with equal weights.
+Scaling plots report the expression MSE for the corresponding selection convention, not the summed optimisation objective.
+
+The validation partition contained the same cell identities at every evaluation, but the dataset pipeline recomputed stochastic gene selection and masking at each validation event.
+Validation losses therefore used newly sampled masks and gene subsets.
+For representation evaluation, embeddings were recomputed from the corresponding selected but unmasked inputs, so their variation across evaluations reflected gene selection rather than masking.
+
+\subsection{Transformer architecture}
+
+Both formulations used a custom encoder-only~\cite{devlin-etal-2019-bert} transformer~\cite{Vaswani2017}.
+Each pre-normalised block consisted of four-head scaled dot-product self-attention followed by a feed-forward transition with hidden dimension \(4W\), ReLU activation, and dropout.
+Dropout with probability 0.2 was applied to the attention and feed-forward outputs before their residual additions and between the two feed-forward linear layers.
+The ranked formulation additionally applied dropout with probability 0.2 after adding the sinusoidal rank encoding, and each prediction head applied dropout between its two linear layers.
+No dropout was applied to the attention weights themselves.
+Query, key, and value projections had no bias; the attention output projection used a bias.
+The attention gate available in the software was disabled.
+
+In the ranked formulation, gene identifiers were mapped to learned \(W\)-dimensional embeddings, combined with sinusoidal rank encodings, and decoded by a two-layer gene classifier with ReLU and dropout.
+In the binned formulation, learned gene embeddings and a two-layer projection of the scalar expression bin were separately layer-normalised and summed.
+Separate two-layer decoders produced the expression-bin estimate and activity logit.
+
+We use \(N\) to denote the trainable encoder/backbone parameter count, referred to here as the non-embedding parameter count.
+Thus \(N\) excludes the gene/expression input modules and all task-specific decoders.
+The total trainable parameter count, used only in explicitly labelled supplementary diagnostics, is denoted by \(N_{\mathrm{tot}}\).
+Encoder depth, \(D\), is the number of transformer blocks; encoder width, \(W\), is the hidden dimension.
+The architectural shape variable \(R\), or depth-to-width ratio, was defined as
+\begin{equation}
+    R = \frac{D}{W}.
+\end{equation}
+
+\subsection{Optimisation and training}
+
+Models were initialised with AdamW~\cite{loshchilov2018decoupled} using \(\beta_1=0.9\), \(\beta_2=0.95\), PyTorch's default \(\epsilon=10^{-8}\), and weight decay 0.01 applied through a single parameter group.
+For one-cycle~\cite{smith2018superconvergencefasttrainingneural} runs, PyTorch's default momentum cycling varied AdamW's \(\beta_1\) from 0.95 to 0.85 during the increasing-learning-rate phase and back to 0.95 during annealing, while \(\beta_2\) remained 0.95.
+The one-cycle schedule used a 30\% increasing phase, cosine annealing, initial learning rate \(\lambda_{\max}/25\), and final learning rate \(\lambda_{\max}/250{,}000\).
+The warm-up/constant sweeps did not cycle momentum and retained the initialised AdamW coefficients.
+The gradient norm was clipped to one~\cite{Pascanu2013}.
+Training used bfloat16~\cite{kalamkar2019studybfloat16deeplearning} mixed precision, a physical and effective batch size of 32 cells, and no gradient accumulation.
+
+\subsubsection{Batch-size selection}
+
+Before the principal sweeps, we evaluated physical batch sizes of 4, 16, 32, 64, and 128 for both formulations.
+These experiments used context length 256, six transformer blocks, four attention heads, widths of 128, 256, 512, and 1,024, learning rate \(3\times10^{-4}\), a one-cycle schedule, and 15,000 optimiser steps.
+Batch size 32 was selected for subsequent experiments as a practical compromise between per-step memory requirements and the number of cells processed per update.
+
+\subsubsection{Context-length and non-embedding-parameter sweep}
+
+The context-length/model-size sweep used a one-cycle learning-rate schedule with maximum learning rate \(10^{-3}\) and up to 50,000 optimiser steps.
+It crossed five context lengths (128--2,048), four widths (128, 256, 512, and 768), and five depths (2--6), for 100 planned configurations per formulation.
+The analysed data contain 100 ranked and 100 binned configurations.
+A complete 50,000-step run with a batch size of 32 produced 1.6 million training-cell examples, and training stopped at the optimiser-step limit before exhausting the training partition.
+Validation and downstream representation evaluation were performed before the first optimiser update and every 500 optimiser steps thereafter.
+
+\subsubsection{Compute-matched sweeps}
+
+Learning-rate and depth/width sweeps used a linear warm-up from \(10^{-6}\) times the target learning rate to the target value over 500 optimiser steps, followed by a constant learning rate.
+Because configurations differed in FLOPs per step, the maximum step count was selected separately for each architecture to approach its target compute budget.
+Runs that reached at least 90\% of the requested slice were eligible for learning-rate optimisation; response-surface observations were retained when they reached at least 99\% of their requested compute slice.
+
+\subsection{Parameter and compute accounting}
+
+Parameter counts were obtained directly from the instantiated PyTorch modules.
+Forward-pass floating-point operations per cell, \(F_{\mathrm{fwd}}\), were estimated with Lightning Fabric's operator-level FLOP counter on a meta-device execution of the complete model forward pass.
+Estimated training FLOPs at optimiser step \(t\) were
+\begin{equation}
+    C(t) = 3\,F_{\mathrm{fwd}}\,B_{\mathrm{eff}}\,t,
+\end{equation}
+where \(B_{\mathrm{eff}}\) is the effective batch size.
+The factor of three approximates one forward and two backward-equivalent passes.
+This measure includes model-forward operators but is not an end-to-end hardware measurement; it excludes data loading, optimiser updates, and device utilisation overhead.
+The FLOP counter used the nominal configured context length, including for the binned formulation, and therefore slightly overestimates the operations associated with its effective \(S-1\)-position inputs.
+
+\subsection{Scaling with non-embedding parameter count and context length}
+
+For the initial scaling analysis, models were compared at the largest optimiser step reached by every run within a formulation.
+This was step 37,499 for the ranked formulation and step 49,999 for the binned formulation.
+At each context length, we fitted
+\begin{equation}
+    L(N)=A N^{-k}
+\end{equation}
+by ordinary least squares after base-10 logarithmic transformation of \(L\) and \(N\).
+We neglected an irreducible component of the loss~\cite{kendiukhov2026scaling}, as our purpose was to investigate local, rather than asymptotic, behaviour.
+The largest-\(N\) configuration was excluded from the fit and used as a held-out extrapolation target.
+The reported exponent is \(k=-b_{\mathrm{size}}\), where \(b_{\mathrm{size}}\) is the fitted slope of \(\log_{10}L\) on \(\log_{10}N\).
+These comparisons hold optimiser steps, batch size, and the number of examples seen approximately fixed, but not training FLOPs; larger encoders require more compute per step.
+
+\subsection{Learning-rate scaling}
+
+Learning-rate sweeps crossed four target non-embedding parameter counts (\(10^6\), \(10^7\), \(10^8\), \(10^9\)), three target depths (2, 6, and 20 blocks), and five learning rates (\(10^{-5}\), \(3\times10^{-5}\), \(10^{-4}\), \(3\times10^{-4}\), \(10^{-3}\)).
+Width was chosen in multiples of four to minimise the absolute difference between the actual and target non-embedding parameter count while retaining four attention heads.
+The ranked and binned sweeps targeted total budgets of \(7.0\times10^{17}\) and \(1.4\times10^{17}\) estimated training FLOPs, respectively.
+
+Loss was sampled at eight equally spaced fractions from 9.375\% to 75\% of each matched budget.
+Thus the last analysed slice shown in Figure~\ref{fig:04} corresponds to 75\% of the target budget: \(5.25\times10^{17}\) FLOPs for the ranked formulation and \(1.05\times10^{17}\) FLOPs for the binned formulation.
+
+For each non-embedding-parameter/depth pair at a given compute slice, we first selected the sampled learning rate with the smallest loss.
+If that point had immediate sampled neighbours on both sides in the original learning-rate grid, and all three runs had finite losses and reached the completion threshold, we fitted
+\begin{equation}
+    L = a_2{[\log_{10}(\lambda)]}^2+a_1\log_{10}(\lambda)+a_0
+\end{equation}
+to the best point and its two neighbours.
+We accepted the continuous optimum \(\log_{10}\lambda^*=-a_1/(2a_2)\) only when \(a_2>0\) and the vertex lay inside the three-point fitting interval.
+Otherwise, including when the discrete optimum occurred at a sweep boundary, or either immediate neighbour was incomplete, missing, or non-finite, we retained the sampled optimum.
+
+We compared four descriptive scaling rules,
+\begin{align}
+    \lambda^* &= \lambda_0,\\
+    \lambda^*(N) &= \lambda_0 N^{\alpha_N},\\
+    \lambda^*(D) &= \lambda_0 D^{\alpha_D},\\
+    \lambda^*(N,D) &= \lambda_0 N^{\alpha_N}D^{\alpha_D}.
+\end{align}
+The models were fitted by ordinary least squares in base-10 log space.
+Fit quality was summarised by root mean square error in \(\log_{10}\lambda\) (dex).
+These errors describe the observed architecture grid and are not out-of-distribution test errors.
+For coefficient sensitivity intervals, architecture points were resampled with replacement 2,000 times and the joint model was refitted; percentile intervals were obtained from the bootstrap distribution.
+
+\subsection{Depth-to-width response surfaces}
+\label{sec:quad}
+The architectural-shape sweep crossed seven target non-embedding parameter counts (1 million, 3 million, 10 million, 30 million, 100 million, 300 million, and 1 billion) with seven target depths (2, 4, 8, 16, 24, 32, and 64 blocks), yielding 49 configurations per formulation.
+Width was selected to match each target size as closely as possible, while the number of attention heads was fixed at 4.
+Learning rates were assigned using joint size/depth rules fitted at 75\% of each formulation's learning-rate sweep budget.
+Both formulations used the joint rules reported in Supplementary Information, Section~5, evaluated at the target non-embedding parameter count and depth.
+Each run targeted up to \(10^{18}\) estimated training FLOPs, subject to a maximum of 100,000 optimiser steps.
+
+Training curves were sampled at seven logarithmically spaced compute budgets between \(3\times10^{15}\) and \(10^{18}\) FLOPs.
+Observations with completion fraction below 0.99 at a requested slice were excluded.
+Let
+\begin{equation}
+    \mathbf{x}=(\log_{10}N,\log_{10}C,\log_{10}R)
+\end{equation}
+and let \(z_i=(x_i-\bar{x}_i)/s_i\) denote the standardised predictors over the retained observations.
+We fitted the raw pre-training loss by ordinary least squares using the full quadratic model
+\begin{equation}
+    L = \theta_0 + \sum_{i=1}^{3}\theta_i z_i
+      + \sum_{i=1}^{3}\theta_{ii}z_i^2
+      + \sum_{i<j}\theta_{ij}z_i z_j + \varepsilon_{\mathrm{surf}}.
+\end{equation}
+
+Predictive performance was evaluated with random five-fold cross-validation (seed 7) and leave-one-compute-slice-out validation.
+The former splits surface observations and may therefore place different compute slices from the same training run in training and test folds; the latter evaluates prediction at an unseen compute slice while retaining the same architecture grid, with extrapolation required when an endpoint slice is held out.
+
+For fixed \(N\) and \(C\), the optimal log depth-to-width ratio was the analytic stationary point along the \(z_R\) axis.
+An optimum was accepted only when the fitted coefficient of \(z_R^2\) was positive.
+The optimum was unconstrained and could fall outside the observed range of ratios; such cases were marked as extrapolations.
+
+Uncertainty bands were generated from 250 row-bootstrap samples (seed 11).
+Each sample refitted the response surface to observations drawn with replacement, and non-convex fits in the log-ratio direction were discarded.
+Curves show the 5th and 95th percentiles of the retained optima.
+Because compute slices from a single run are correlated, these bands should be interpreted as surface-sensitivity intervals rather than independent-run confidence intervals.
+
+\subsection{Downstream representation evaluation}
+\label{sec:down}
+
+At validation checkpoints, models were placed in evaluation mode, and token-level encoder outputs from the selected but unmasked inputs were averaged across sequence positions to obtain a single vector per cell.
+Embedding inference followed the training mixed-precision configuration, and the saved embeddings were converted to 32-bit floating-point before downstream analysis.
+No batch integration or correction algorithm was applied.
+The same held-out validation cells used for pre-training validation were used for the representation analyses below; downstream labels were not used to update the encoder.
+
+For clustering, cell embeddings were placed in \texttt{AnnData.X} and passed to Scanpy with its representation argument left at the default.
+Because all analysed embeddings had more than 50 dimensions, Scanpy projected them to 50 principal components before constructing a 15-nearest-neighbour graph with Euclidean distance.
+Leiden clustering was then performed at fixed resolution 1.0.
+Fine-label clustering used all 30,000 validation cells.
+For coarse-label clustering, cells without a valid coarse label were first removed, and the PCA, neighbour graph, and Leiden clustering were recomputed on the remaining 29,252 cells.
+Agreement with the corresponding labels was quantified with normalised mutual information (NMI), adjusted Rand index (ARI), and homogeneity.
+
+For the linear-probe analysis, cells were divided into stratified 80\% training and 20\% validation subsets with seed 0.
+A closed-form ridge-regression classifier without an intercept was fitted to one-hot targets using penalty \(\rho=1\),
+\begin{equation}
+    \widehat{\Gamma}={(X^\top X+\rho I)}^{-1}X^\top Y,
+\end{equation}
+implemented through a least-squares solve.
+The mean-pooled embeddings were used without centring, feature standardisation, dimensionality reduction, or length normalisation.
+Accuracy was reported on the 20\% probe-validation subset for both fine and coarse labels.
+
+We additionally calculated scIB~\cite{Luecken2021} metrics on the uncorrected embeddings using the source dataset as the batch label and cell type as the biological label.
+These calculations used the raw, unprojected mean-pooled embeddings.
+For the scIB NMI and ARI, the Leiden resolution was selected by maximising fine-label NMI across 10 resolutions from 0.2 to 2.0, following the scIB default procedure.
+These resolution-optimised values were used as a sensitivity check that the common fixed resolution did not unduly disadvantage particular model configurations, rather than as additional independent clustering outcomes.
+Label average silhouette width (ASW) was linearly scaled to the interval \([0,1]\).
+Batch ASW was calculated within each fine cell type and averaged across eligible cell types, with larger values indicating greater mixing of source datasets.
+Graph connectivity was the mean across fine cell types of the fraction of cells in the largest connected component of that cell type's neighbour subgraph.
+Because dataset of origin can conflate differences in donors, tissues, protocols, laboratories, and study design, it is a coarse source-domain label rather than a conventional batch of matched experimental replicates.
+Together with the absence of an integration method, this means that source-dataset ASW is a descriptive cross-dataset mixing diagnostic, not a direct measure of technical batch correction, and receives less interpretive weight than the biological-preservation metrics.
+
+For compact visualisation, we defined a study-specific composite score as the unweighted row mean of the available values among fine NMI, fine ARI, fine homogeneity, coarse NMI, coarse ARI, coarse homogeneity, label ASW, graph connectivity, and coarse-label ridge validation accuracy:
+\begin{equation}
+    \mathrm{BIOscore}=\frac{1}{|\mathcal{Q}|}\sum_{q\in\mathcal{Q}}q.
+\end{equation}
+All component metrics were oriented so that larger values indicate better performance.
+The fine- and coarse-NMI, ARI, and homogeneity terms in BIOscore were the fixed-resolution clustering metrics described above, rather than the resolution-optimised scIB NMI and ARI.
+The resolution-optimised NMI and ARI were excluded to avoid counting alternative versions of the same clustering-agreement metrics twice; source-dataset ASW was excluded because it does not measure biological preservation and is not equivalent to a controlled replicate batch effect.
+BIOscore is not a standard scIB statistic; component metrics are reported separately to avoid relying solely on the composite.
+
+\subsection{Software and reproducibility}
+
+The pipeline was implemented in Python 3.12 using PyTorch, Lightning~\cite{Lightning}, TileDB-SOMA, TileDB-SOMA-ML, Polars, Scanpy~\cite{Wolf2018}, scIB, scikit-learn~\cite{scikit-learn}, and Aim.
+The locked GPU environment used PyTorch \texttt{2.11.0+cu128}, Lightning 2.6.1, TileDB-SOMA 2.3.0, TileDB-SOMA-ML 0.1.0, Scanpy 1.11.5, and scIB 1.1.7.
+The training entry point set PyTorch's float32 matrix-multiplication precision to \texttt{medium}.
+Each training task used one accelerator: either an NVIDIA RTX PRO 6000 Blackwell GPU with 96~GB of memory on IFOM's on-premises cluster or a custom NVIDIA Ampere A100 GPU with 64~GB of HBM2e memory on CINECA's LEONARDO system.
+
+The authors designed the software and manually wrote its initial implementation, with limited generative AI assistance.
+Generative AI tools, including both open and proprietary models accessed through multiple interfaces, were also used for subsequent coding assistance and software refactoring, and for language editing and proofreading of author-written manuscript drafts.
+The authors reviewed and edited the resulting material and retain responsibility for the code, analyses, interpretation and final manuscript.
+
+\backmatter
+
+\bmhead{Data availability}
+
+This study analysed existing human single-cell RNA-sequencing data from CZ CELLxGENE Census; no new primary sequencing data were generated.
+The Census release and observation filter used in this study are specified in Methods and Supplementary Table~S1.
+Public Census releases and access instructions are available at \url{https://chanzuckerberg.github.io/cellxgene-census/cellxgene_census_docsite_data_release_info.html}.
+The processed training-loss, downstream-evaluation and hyperparameter-sweep tables underlying the figures, their provenance manifest, and the ontology-derived label mappings are available at \url{https://github.com/bioinformatics-hub/transcriptomics-scaling-reproducibility}, under \texttt{publication/plot\_data/} and \texttt{manuscript/}.
+
+\bmhead{Code availability}
+
+Code and processed plotting data: \url{https://github.com/bioinformatics-hub/transcriptomics-scaling-reproducibility}.
+
+%\bmhead{Supplementary information}
+
+%If your article has accompanying supplementary file/s please state so here. 
+
+%Authors reporting data from electrophoretic gels and blots should supply the full unprocessed scans for key as part of their Supplementary information. This may be requested by the editorial team/s if it is missing.
+
+%Please refer to Journal-level guidance for any specific requirements.
+
+\bmhead{Funding}
+
+This work was supported by an AIRC Individual Grant (IG 2025, no.~32185, to F.M.B.); a European Research Council Consolidator Grant (microC, no.~772970, to F.M.B.); Fondazione Invernizzi (DATAGENRE, Bocconi, to F.M.B.); and the Italian Science Fund (FIS), FIS 3 Call, through the project ``Decoding the Language of Single-Cell Gene Regulation with Transformers'' (FIS-2024-02465; CUP J53C25002180001, to A.T.).
+Computational resources were provided through EuroHPC access proposal no.~EHPC-DEV-2025D11-095, awarded to F.M.B. and F.B.
+
+\bmhead{Acknowledgements}
+
+We thank members of the CompBio Group at Bocconi University for helpful discussions, Michelangelo Nardi for assistance with preliminary experiments not included in this work, and the Research Computing and Data Science Office at IFOM for support in accessing the institute's computing infrastructure.
+We also thank the HPC Team at Bocconi University for providing access to computational resources for preliminary experiments not included in this work.
+
+\bmhead{Author contributions}
+
+F.B., G.C., F.M.B. and A.T. conceived the study.
+F.B. and G.C. developed the software.
+F.B., G.C., A.C. and G.G. performed the experiments.
+F.B. and G.C. analysed and interpreted the results.
+F.B. prepared the figures and drafted the manuscript.
+F.M.B. and A.T. supervised the research and revised the manuscript.
+
+\bmhead{Competing interests}
+
+The authors declare no competing interests.
+
+\clearpage
+
+
+% BEGIN GENERATED BIBLIOGRAPHY
+% Generated by python3 manuscript/update_bibliography.py; edit bibliography.bib.
+\begin{thebibliography}{10}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\burl{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{}\fi
+\providecommand{\bibinfo}[2]{#2}
+\providecommand{\eprint}[2][]{\url{#2}}
+\providecommand{\doi}[1]{\url{https://doi.org/#1}}
+\bibcommenthead
+
+\bibitem{Hestness2017}
+\bibinfo{author}{Hestness, J.} \emph{et~al.}
+\newblock \bibinfo{title}{Deep learning scaling is predictable, empirically}.
+\newblock \bibinfo{howpublished}{Preprint at
+  \url{https://arxiv.org/abs/1712.00409}} (\bibinfo{year}{2017}).
+
+\bibitem{Kaplan2020}
+\bibinfo{author}{Kaplan, J.} \emph{et~al.}
+\newblock \bibinfo{title}{Scaling laws for neural language models}.
+\newblock \bibinfo{howpublished}{Preprint at
+  \url{https://arxiv.org/abs/2001.08361}} (\bibinfo{year}{2020}).
+
+\bibitem{hoffmann2022trainingcomputeoptimallargelanguage}
+\bibinfo{author}{Hoffmann, J.} \emph{et~al.}
+\newblock \bibinfo{title}{Training compute-optimal large language models}.
+\newblock \bibinfo{howpublished}{Preprint at
+  \url{https://arxiv.org/abs/2203.15556}} (\bibinfo{year}{2022}).
+
+\bibitem{Regev2017}
+\bibinfo{author}{Regev, A.} \emph{et~al.}
+\newblock \bibinfo{title}{The {Human Cell Atlas}}.
+\newblock \emph{\bibinfo{journal}{eLife}} \textbf{\bibinfo{volume}{6}},
+  \bibinfo{pages}{e27041} (\bibinfo{year}{2017}).
+\newblock \urlprefix\url{https://doi.org/10.7554/eLife.27041}.
+
+\bibitem{Theodoris2023}
+\bibinfo{author}{Theodoris, C.~V.} \emph{et~al.}
+\newblock \bibinfo{title}{Transfer learning enables predictions in network
+  biology}.
+\newblock \emph{\bibinfo{journal}{Nature}} \textbf{\bibinfo{volume}{618}},
+  \bibinfo{pages}{616--624} (\bibinfo{year}{2023}).
+\newblock \urlprefix\url{https://doi.org/10.1038/s41586-023-06139-9}.
+
+\bibitem{Cui2024}
+\bibinfo{author}{Cui, H.} \emph{et~al.}
+\newblock \bibinfo{title}{{scGPT}: toward building a foundation model for
+  single-cell multi-omics using generative {AI}}.
+\newblock \emph{\bibinfo{journal}{Nat. Methods}} \textbf{\bibinfo{volume}{21}},
+  \bibinfo{pages}{1470--1480} (\bibinfo{year}{2024}).
+\newblock \urlprefix\url{https://doi.org/10.1038/s41592-024-02201-0}.
+
+\bibitem{Brown2020}
+\bibinfo{author}{Brown, T.} \emph{et~al.} \bibinfo{title}{Language models are
+  few-shot learners}.
+\newblock In \emph{\bibinfo{booktitle}{Advances in Neural Information
+  Processing Systems}} (eds \bibinfo{editor}{Larochelle, H.},
+  \bibinfo{editor}{Ranzato, M.}, \bibinfo{editor}{Hadsell, R.},
+  \bibinfo{editor}{Balcan, M.} \& \bibinfo{editor}{Lin, H.}),
+  Vol.~\bibinfo{volume}{33}, \bibinfo{pages}{1877--1901}
+  (\bibinfo{publisher}{Curran Associates, Inc.}, \bibinfo{year}{2020}).
+\newblock
+  \urlprefix\url{https://proceedings.neurips.cc/paper_files/paper/2020/file/1457c0d6bfcb4967418bfb8ac142f64a-Paper.pdf}.
+
+\bibitem{Hao2024}
+\bibinfo{author}{Hao, M.} \emph{et~al.}
+\newblock \bibinfo{title}{Large-scale foundation model on single-cell
+  transcriptomics}.
+\newblock \emph{\bibinfo{journal}{Nat. Methods}} \textbf{\bibinfo{volume}{21}},
+  \bibinfo{pages}{1481--1491} (\bibinfo{year}{2024}).
+\newblock \urlprefix\url{https://doi.org/10.1038/s41592-024-02305-7}.
+
+\bibitem{Fischer2024}
+\bibinfo{author}{Fischer, F.} \emph{et~al.}
+\newblock \bibinfo{title}{{scTab}: Scaling cross-tissue single-cell annotation
+  models}.
+\newblock \emph{\bibinfo{journal}{Nat. Commun.}} \textbf{\bibinfo{volume}{15}},
+  \bibinfo{pages}{6611} (\bibinfo{year}{2024}).
+\newblock \urlprefix\url{https://doi.org/10.1038/s41467-024-51059-5}.
+
+\bibitem{Rizvi2025}
+\bibinfo{author}{Rizvi, S.~A.} \emph{et~al.}
+\newblock \bibinfo{title}{Scaling large language models for next-generation
+  single-cell analysis}.
+\newblock \bibinfo{howpublished}{Preprint at
+  \url{https://doi.org/10.1101/2025.04.14.648850}} (\bibinfo{year}{2025}).
+
+\bibitem{Adduri2025}
+\bibinfo{author}{Adduri, A.~K.} \emph{et~al.}
+\newblock \bibinfo{title}{Predicting cellular responses to perturbation across
+  diverse contexts with {State}}.
+\newblock \bibinfo{howpublished}{Preprint at
+  \url{https://doi.org/10.1101/2025.06.26.661135}} (\bibinfo{year}{2025}).
+
+\bibitem{Gandhi2025}
+\bibinfo{author}{Gandhi, S.} \emph{et~al.}
+\newblock \bibinfo{title}{Tahoe-x1: Scaling perturbation-trained single-cell
+  foundation models to 3 billion parameters}.
+\newblock \bibinfo{howpublished}{Preprint at
+  \url{https://doi.org/10.1101/2025.10.23.683759}} (\bibinfo{year}{2025}).
+
+\bibitem{Dong2026}
+\bibinfo{author}{Dong, M.} \emph{et~al.}
+\newblock \bibinfo{title}{Stack: In-context learning of single-cell biology}.
+\newblock \bibinfo{howpublished}{Preprint at
+  \url{https://doi.org/10.64898/2026.01.09.698608}} (\bibinfo{year}{2026}).
+
+\bibitem{Chen2026}
+\bibinfo{author}{Chen, H.} \emph{et~al.}
+\newblock \bibinfo{title}{Scaling and quantization of large-scale foundation
+  model enables resource-efficient predictions in network biology}.
+\newblock \emph{\bibinfo{journal}{Nat. Comput. Sci.}}
+  \textbf{\bibinfo{volume}{6}}, \bibinfo{pages}{450--463}
+  (\bibinfo{year}{2026}).
+\newblock \urlprefix\url{https://doi.org/10.1038/s43588-026-00972-4}.
+
+\bibitem{DenAdel2026}
+\bibinfo{author}{DenAdel, A.} \emph{et~al.}
+\newblock \bibinfo{title}{Evaluating the role of pretraining dataset size and
+  diversity on single-cell foundation model performance}.
+\newblock \emph{\bibinfo{journal}{Nat. Methods}} \textbf{\bibinfo{volume}{23}},
+  \bibinfo{pages}{1447--1457} (\bibinfo{year}{2026}).
+\newblock \urlprefix\url{https://doi.org/10.1038/s41592-026-03120-y}.
+
+\bibitem{CZI2023}
+\bibinfo{author}{{CZI Cell Science Program}} \emph{et~al.}
+\newblock \bibinfo{title}{{CZ CELLxGENE Discover}: a single-cell data platform
+  for scalable exploration, analysis and modeling of aggregated data}.
+\newblock \emph{\bibinfo{journal}{Nucleic Acids Res.}}
+  \textbf{\bibinfo{volume}{53}}, \bibinfo{pages}{D886--D900}
+  (\bibinfo{year}{2025}).
+\newblock \urlprefix\url{https://doi.org/10.1093/nar/gkae1142}.
+
+\bibitem{Kedzierska2025}
+\bibinfo{author}{Kedzierska, K.~Z.}, \bibinfo{author}{Crawford, L.},
+  \bibinfo{author}{Amini, A.~P.} \& \bibinfo{author}{Lu, A.~X.}
+\newblock \bibinfo{title}{Zero-shot evaluation reveals limitations of
+  single-cell foundation models}.
+\newblock \emph{\bibinfo{journal}{Genome Biol.}} \textbf{\bibinfo{volume}{26}},
+  \bibinfo{pages}{101} (\bibinfo{year}{2025}).
+\newblock \urlprefix\url{https://doi.org/10.1186/s13059-025-03574-x}.
+
+\bibitem{AhlmannEltze2025}
+\bibinfo{author}{Ahlmann-Eltze, C.}, \bibinfo{author}{Huber, W.} \&
+  \bibinfo{author}{Anders, S.}
+\newblock \bibinfo{title}{Deep-learning-based gene perturbation effect
+  prediction does not yet outperform simple linear baselines}.
+\newblock \emph{\bibinfo{journal}{Nat. Methods}} \textbf{\bibinfo{volume}{22}},
+  \bibinfo{pages}{1657--1661} (\bibinfo{year}{2025}).
+\newblock \urlprefix\url{https://doi.org/10.1038/s41592-025-02772-6}.
+
+\bibitem{yang2024tensor}
+\bibinfo{author}{Yang, G.}, \bibinfo{author}{Yu, D.}, \bibinfo{author}{Zhu, C.}
+  \& \bibinfo{author}{Hayou, S.} \bibinfo{title}{{Tensor Programs VI}: Feature
+  learning in infinite depth neural networks}.
+\newblock In \emph{\bibinfo{booktitle}{The Twelfth International Conference on
+  Learning Representations}} (\bibinfo{year}{2024}).
+\newblock \urlprefix\url{https://openreview.net/forum?id=17pVDnpwwl}.
+
+\bibitem{ren2026rethinkinglanguagemodelscaling}
+\bibinfo{author}{Ren, L.}, \bibinfo{author}{Liu, Y.}, \bibinfo{author}{Shen,
+  Y.} \& \bibinfo{author}{Chen, W.}
+\newblock \bibinfo{title}{Rethinking language model scaling under transferable
+  hypersphere optimization}.
+\newblock \bibinfo{howpublished}{Preprint at
+  \url{https://arxiv.org/abs/2603.28743}} (\bibinfo{year}{2026}).
+
+\bibitem{Abnar2025}
+\bibinfo{author}{Abnar, S.} \emph{et~al.} \bibinfo{title}{Parameters vs
+  {FLOP}s: Scaling laws for optimal sparsity for mixture-of-experts language
+  models}.
+\newblock In \emph{\bibinfo{booktitle}{Proceedings of the 42nd International
+  Conference on Machine Learning}} (eds \bibinfo{editor}{Singh, A.}
+  \emph{et~al.}), Vol. \bibinfo{volume}{267} of
+  \emph{\bibinfo{series}{Proceedings of Machine Learning Research}},
+  \bibinfo{pages}{204--230} (\bibinfo{publisher}{PMLR}, \bibinfo{year}{2025}).
+\newblock \urlprefix\url{https://proceedings.mlr.press/v267/abnar25a.html}.
+
+\bibitem{yang2022tensorprogramsvtuning}
+\bibinfo{author}{Yang, G.} \emph{et~al.}
+\newblock \bibinfo{title}{{Tensor Programs V}: Tuning large neural networks via
+  zero-shot hyperparameter transfer}.
+\newblock \bibinfo{howpublished}{Preprint at
+  \url{https://arxiv.org/abs/2203.03466}} (\bibinfo{year}{2022}).
+
+\bibitem{mlodozeniec2026completed}
+\bibinfo{author}{Mlodozeniec, B.~K.} \emph{et~al.} \bibinfo{title}{Completed
+  hyperparameter transfer across modules, width, depth, batch and duration}.
+\newblock In \emph{\bibinfo{booktitle}{The Fourteenth International Conference
+  on Learning Representations}} (\bibinfo{year}{2026}).
+\newblock \urlprefix\url{https://openreview.net/forum?id=elB9k4nTL1}.
+
+\bibitem{paszke2019pytorchimperativestylehighperformance}
+\bibinfo{author}{Paszke, A.} \emph{et~al.}
+\newblock \bibinfo{title}{{PyTorch}: An imperative style, high-performance deep
+  learning library}.
+\newblock \bibinfo{howpublished}{Preprint at
+  \url{https://arxiv.org/abs/1912.01703}} (\bibinfo{year}{2019}).
+
+\bibitem{harris2020array}
+\bibinfo{author}{Harris, C.~R.} \emph{et~al.}
+\newblock \bibinfo{title}{Array programming with {NumPy}}.
+\newblock \emph{\bibinfo{journal}{Nature}} \textbf{\bibinfo{volume}{585}},
+  \bibinfo{pages}{357--362} (\bibinfo{year}{2020}).
+\newblock \urlprefix\url{https://doi.org/10.1038/s41586-020-2649-2}.
+
+\bibitem{Bard2005}
+\bibinfo{author}{Bard, J.}, \bibinfo{author}{Rhee, S.~Y.} \&
+  \bibinfo{author}{Ashburner, M.}
+\newblock \bibinfo{title}{An ontology for cell types}.
+\newblock \emph{\bibinfo{journal}{Genome Biol.}} \textbf{\bibinfo{volume}{6}},
+  \bibinfo{pages}{R21} (\bibinfo{year}{2005}).
+\newblock \urlprefix\url{https://doi.org/10.1186/gb-2005-6-2-r21}.
+
+\bibitem{devlin-etal-2019-bert}
+\bibinfo{author}{Devlin, J.}, \bibinfo{author}{Chang, M.-W.},
+  \bibinfo{author}{Lee, K.} \& \bibinfo{author}{Toutanova, K.}
+  \bibinfo{title}{{BERT}: Pre-training of deep bidirectional transformers for
+  language understanding}.
+\newblock In \emph{\bibinfo{booktitle}{Proceedings of the 2019 Conference of
+  the North {A}merican Chapter of the Association for Computational
+  Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)}}
+  (eds \bibinfo{editor}{Burstein, J.}, \bibinfo{editor}{Doran, C.} \&
+  \bibinfo{editor}{Solorio, T.}), \bibinfo{pages}{4171--4186}
+  (\bibinfo{publisher}{Association for Computational Linguistics},
+  \bibinfo{address}{Minneapolis, Minnesota}, \bibinfo{year}{2019}).
+\newblock \urlprefix\url{https://aclanthology.org/N19-1423/}.
+
+\bibitem{Vaswani2017}
+\bibinfo{author}{Vaswani, A.} \emph{et~al.} \bibinfo{title}{Attention is all
+  you need}.
+\newblock In \emph{\bibinfo{booktitle}{Proceedings of the 31st International
+  Conference on Neural Information Processing Systems}}, NIPS'17,
+  \bibinfo{pages}{6000--6010} (\bibinfo{publisher}{Curran Associates Inc.},
+  \bibinfo{address}{Red Hook, NY, USA}, \bibinfo{year}{2017}).
+
+\bibitem{loshchilov2018decoupled}
+\bibinfo{author}{Loshchilov, I.} \& \bibinfo{author}{Hutter, F.}
+  \bibinfo{title}{Decoupled weight decay regularization}.
+\newblock In \emph{\bibinfo{booktitle}{International Conference on Learning
+  Representations}} (\bibinfo{year}{2019}).
+\newblock \urlprefix\url{https://openreview.net/forum?id=Bkg6RiCqY7}.
+
+\bibitem{smith2018superconvergencefasttrainingneural}
+\bibinfo{author}{Smith, L.~N.} \& \bibinfo{author}{Topin, N.}
+\newblock \bibinfo{title}{Super-convergence: Very fast training of neural
+  networks using large learning rates}.
+\newblock \bibinfo{howpublished}{Preprint at
+  \url{https://arxiv.org/abs/1708.07120}} (\bibinfo{year}{2018}).
+
+\bibitem{Pascanu2013}
+\bibinfo{author}{Pascanu, R.}, \bibinfo{author}{Mikolov, T.} \&
+  \bibinfo{author}{Bengio, Y.} \bibinfo{title}{On the difficulty of training
+  recurrent neural networks}.
+\newblock In \emph{\bibinfo{booktitle}{Proceedings of the 30th International
+  Conference on Machine Learning}}, Vol.~\bibinfo{volume}{28} of
+  \emph{\bibinfo{series}{Proceedings of Machine Learning Research}},
+  \bibinfo{pages}{1310--1318} (\bibinfo{publisher}{PMLR},
+  \bibinfo{year}{2013}).
+\newblock \urlprefix\url{https://proceedings.mlr.press/v28/pascanu13.html}.
+
+\bibitem{kalamkar2019studybfloat16deeplearning}
+\bibinfo{author}{Kalamkar, D.} \emph{et~al.}
+\newblock \bibinfo{title}{A study of {BFLOAT16} for deep learning training}.
+\newblock \bibinfo{howpublished}{Preprint at
+  \url{https://arxiv.org/abs/1905.12322}} (\bibinfo{year}{2019}).
+
+\bibitem{kendiukhov2026scaling}
+\bibinfo{author}{Kendiukhov, I.}
+\newblock \bibinfo{title}{Scaling laws for masked-reconstruction transformers
+  on single-cell transcriptomics}.
+\newblock \emph{\bibinfo{journal}{Trans. Mach. Learn. Res.}}
+  (\bibinfo{year}{2026}).
+\newblock \urlprefix\url{https://openreview.net/forum?id=a8rUQqionr}.
+
+\bibitem{Luecken2021}
+\bibinfo{author}{Luecken, M.~D.} \emph{et~al.}
+\newblock \bibinfo{title}{Benchmarking atlas-level data integration in
+  single-cell genomics}.
+\newblock \emph{\bibinfo{journal}{Nat. Methods}} \textbf{\bibinfo{volume}{19}},
+  \bibinfo{pages}{41--50} (\bibinfo{year}{2022}).
+\newblock \urlprefix\url{https://doi.org/10.1038/s41592-021-01336-8}.
+
+\bibitem{Lightning}
+\bibinfo{author}{Falcon, W.} \emph{et~al.}
+\newblock \bibinfo{title}{{PyTorchLightning/pytorch-lightning}: 0.7.6 release}.
+\newblock \bibinfo{howpublished}{Zenodo
+  \url{https://doi.org/10.5281/zenodo.3828935}} (\bibinfo{year}{2020}).
+
+\bibitem{Wolf2018}
+\bibinfo{author}{Wolf, F.~A.}, \bibinfo{author}{Angerer, P.} \&
+  \bibinfo{author}{Theis, F.~J.}
+\newblock \bibinfo{title}{{SCANPY}: large-scale single-cell gene expression
+  data analysis}.
+\newblock \emph{\bibinfo{journal}{Genome Biol.}} \textbf{\bibinfo{volume}{19}},
+  \bibinfo{pages}{15} (\bibinfo{year}{2018}).
+\newblock \urlprefix\url{https://doi.org/10.1186/s13059-017-1382-0}.
+
+\bibitem{scikit-learn}
+\bibinfo{author}{Pedregosa, F.} \emph{et~al.}
+\newblock \bibinfo{title}{Scikit-learn: Machine learning in {P}ython}.
+\newblock \emph{\bibinfo{journal}{J. Mach. Learn. Res.}}
+  \textbf{\bibinfo{volume}{12}}, \bibinfo{pages}{2825--2830}
+  (\bibinfo{year}{2011}).
+
+\end{thebibliography}
+% END GENERATED BIBLIOGRAPHY
+
+\end{document}

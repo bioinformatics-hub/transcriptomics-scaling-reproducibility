@@ -1,0 +1,32 @@
+coarse_id,coarse_name,n_validation_cells,fraction_all_validation,fraction_valid_coarse,n_fine_labels
+CL:0000255,eukaryotic cell,2276,0.075867,0.077807,103
+CL:0000066,epithelial cell,2144,0.071467,0.073294,123
+CL:0000738,leukocyte,2000,0.066667,0.068371,55
+CL:0000000,cell,1997,0.066567,0.068269,77
+CL:0000540,neuron,1864,0.062133,0.063722,39
+CL:0000128,oligodendrocyte,1756,0.058533,0.060030,1
+CL:0000057,fibroblast,1233,0.041100,0.042151,25
+CL:0000679,glutamatergic neuron,1226,0.040867,0.041912,28
+CL:0000895,"naive thymus-derived CD4-positive, alpha-beta T cell",1192,0.039733,0.040749,1
+CL:0000625,"CD8-positive, alpha-beta T cell",1156,0.038533,0.039519,12
+CL:4023040,L2/3-6 intratelencephalic projecting glutamatergic neuron,1014,0.033800,0.034664,6
+CL:0000617,GABAergic neuron,1006,0.033533,0.034391,16
+CL:0002319,neural cell,876,0.029200,0.029947,24
+CL:0000235,macrophage,843,0.028100,0.028819,13
+CL:0000624,"CD4-positive, alpha-beta T cell",810,0.027000,0.027690,18
+CL:0000127,astrocyte,797,0.026567,0.027246,7
+unknown,unknown,748,0.024933,,1
+CL:0002057,"CD14-positive, CD16-negative classical monocyte",722,0.024067,0.024682,1
+CL:0000904,"central memory CD4-positive, alpha-beta T cell",664,0.022133,0.022699,1
+CL:0000084,T cell,603,0.020100,0.020614,11
+CL:0002419,mature T cell,576,0.019200,0.019691,16
+CL:0000236,B cell,527,0.017567,0.018016,8
+CL:0000913,"effector memory CD8-positive, alpha-beta T cell",508,0.016933,0.017366,1
+CL:0000115,endothelial cell,485,0.016167,0.016580,17
+CL:0000939,"CD16-positive, CD56-dim natural killer cell, human",476,0.015867,0.016272,1
+CL:0000623,natural killer cell,447,0.014900,0.015281,4
+CL:0000681,radial glial cell,420,0.014000,0.014358,3
+CL:0000788,naive B cell,415,0.013833,0.014187,1
+CL:0000071,blood vessel endothelial cell,412,0.013733,0.014085,16
+CL:0000604,retinal rod cell,411,0.013700,0.014050,1
+CL:0000905,"effector memory CD4-positive, alpha-beta T cell",396,0.013200,0.013538,1

@@ -1,0 +1,1061 @@
+source_repository: aim-repo/geneformer_like
+behavior_evidence: Checked against the archived implementation delivered for this
+  experiment family. Portable synthetic reference cases accompany the release; the
+  detailed source-history mapping is retained in the private research archive.
+behavior_reference_id: ranked_context_original
+defaults:
+  datamodule:
+    batch_size: 32
+    labels: cell_type
+    mask_pct: 0.15
+    mask_strategy: uniform
+    max_val_samples: 30000
+    n_bins: 50
+    normalize_expr_for_ranking: true
+    obs_value_filter: is_primary_data == True
+    selection: active
+  downstream:
+    clustering_method: leiden
+    coarse_k: 30
+    keep_artifacts: false
+    n_neighbors: 15
+    poll_interval_s: 60
+    resolution: 1.0
+    ridge_seed: 0
+  metadata:
+    pipeline: geneformer
+    title: geneformer_like
+    training_behavior: legacy
+  model:
+    bioformer:
+      chunk_size: 200
+      d_opm: 32
+      d_z: 128
+      gating: false
+      n_heads: 4
+      n_layers: 4
+      norm_first: true
+      pair_updates: true
+    dropout: 0.2
+    freeze_encoder: true
+    from_ckpt: false
+    lr: 0.001
+    model_class: transformer
+    total_genes: 61497
+    transformer:
+      gating: false
+      n_heads: 4
+      norm_first: true
+  paths:
+    path_to_aimrepo: output/reproduction/aim-repo/geneformer_like
+    path_to_celltypes: data/csvs/celltypes.csv
+    path_to_census: data/census/census_data/homo_sapiens
+    path_to_ckpt_dir: output/reproduction/checkpoints
+    path_to_ckpt_file: null
+    path_to_coarse_labels_dir: output/reproduction/coarse_labels
+    path_to_finetune_dir: null
+    path_to_hvg: data/csvs/hvg.csv
+    path_to_means: data/csvs/means.csv
+    path_to_dataset_ids: data/csvs/dataset_ids.csv
+  trainer:
+    accumulate_grad: 1
+    checkpoint_steps: 12500
+    checkpoint: true
+    compute_spearman: false
+    find_lr: false
+    lr_scheduler: onecycle
+    n_epochs: 1
+    n_steps: 50000
+    precision: bf16-mixed
+    val_check_interval: 500
+runs:
+- source_run_hashes:
+  - f4991efa488f4a2e930966a8
+  config:
+    metadata:
+      run_name: context_length_1024-d_model_128-transformer_n_layers_2
+    model:
+      context_length: 1024
+      d_model: 128
+      transformer:
+        n_layers: 2
+- source_run_hashes:
+  - 7243ecbc3e2446b195955ecf
+  config:
+    metadata:
+      run_name: context_length_1024-d_model_128-transformer_n_layers_3
+    model:
+      context_length: 1024
+      d_model: 128
+      transformer:
+        n_layers: 3
+- source_run_hashes:
+  - 8ae29b23915442a0bd9e9c8d
+  config:
+    metadata:
+      run_name: context_length_1024-d_model_128-transformer_n_layers_4
+    model:
+      context_length: 1024
+      d_model: 128
+      transformer:
+        n_layers: 4
+- source_run_hashes:
+  - 5867f3fcd45a429c92843ade
+  config:
+    metadata:
+      run_name: context_length_1024-d_model_128-transformer_n_layers_5
+    model:
+      context_length: 1024
+      d_model: 128
+      transformer:
+        n_layers: 5
+- source_run_hashes:
+  - 6425e76d4cb24e9ea3d049f8
+  config:
+    metadata:
+      run_name: context_length_1024-d_model_128-transformer_n_layers_6
+    model:
+      context_length: 1024
+      d_model: 128
+      transformer:
+        n_layers: 6
+- source_run_hashes:
+  - 19f317f5b2034d209be61ea3
+  config:
+    metadata:
+      run_name: context_length_1024-d_model_256-transformer_n_layers_2
+    model:
+      context_length: 1024
+      d_model: 256
+      transformer:
+        n_layers: 2
+- source_run_hashes:
+  - 761b5c391b9e496ea2003c5e
+  config:
+    metadata:
+      run_name: context_length_1024-d_model_256-transformer_n_layers_3
+    model:
+      context_length: 1024
+      d_model: 256
+      transformer:
+        n_layers: 3
+- source_run_hashes:
+  - db8cead7c41244c3be483c13
+  config:
+    metadata:
+      run_name: context_length_1024-d_model_256-transformer_n_layers_4
+    model:
+      context_length: 1024
+      d_model: 256
+      transformer:
+        n_layers: 4
+- source_run_hashes:
+  - f18ada312a7c425d987fdac2
+  config:
+    metadata:
+      run_name: context_length_1024-d_model_256-transformer_n_layers_5
+    model:
+      context_length: 1024
+      d_model: 256
+      transformer:
+        n_layers: 5
+- source_run_hashes:
+  - 19f279a722c546579580fa51
+  config:
+    metadata:
+      run_name: context_length_1024-d_model_256-transformer_n_layers_6
+    model:
+      context_length: 1024
+      d_model: 256
+      transformer:
+        n_layers: 6
+- source_run_hashes:
+  - 4e136335bfd747fc8ca94ec1
+  config:
+    metadata:
+      run_name: context_length_1024-d_model_512-transformer_n_layers_2
+    model:
+      context_length: 1024
+      d_model: 512
+      transformer:
+        n_layers: 2
+- source_run_hashes:
+  - 0e947b64c202449cb1ea9950
+  config:
+    metadata:
+      run_name: context_length_1024-d_model_512-transformer_n_layers_3
+    model:
+      context_length: 1024
+      d_model: 512
+      transformer:
+        n_layers: 3
+- source_run_hashes:
+  - 9487febfe59b4c969b4834ab
+  config:
+    metadata:
+      run_name: context_length_1024-d_model_512-transformer_n_layers_5
+    model:
+      context_length: 1024
+      d_model: 512
+      transformer:
+        n_layers: 5
+- source_run_hashes:
+  - 615f55ec2b7e462db21efd26
+  config:
+    metadata:
+      run_name: context_length_1024-d_model_512-transformer_n_layers_6
+    model:
+      context_length: 1024
+      d_model: 512
+      transformer:
+        n_layers: 6
+- source_run_hashes:
+  - 54a542ef6a6445ce82fb138f
+  config:
+    metadata:
+      run_name: context_length_1024-d_model_768-transformer_n_layers_2
+    model:
+      context_length: 1024
+      d_model: 768
+      transformer:
+        n_layers: 2
+- source_run_hashes:
+  - 930a8dfb27ea4bf386755a69
+  config:
+    metadata:
+      run_name: context_length_1024-d_model_768-transformer_n_layers_3
+    model:
+      context_length: 1024
+      d_model: 768
+      transformer:
+        n_layers: 3
+- source_run_hashes:
+  - 7daad2214d68422fa527d21b
+  config:
+    metadata:
+      run_name: context_length_1024-d_model_768-transformer_n_layers_4
+    model:
+      context_length: 1024
+      d_model: 768
+      transformer:
+        n_layers: 4
+- source_run_hashes:
+  - 61cd1a04106d464a81b09e3b
+  config:
+    metadata:
+      run_name: context_length_1024-d_model_768-transformer_n_layers_5
+    model:
+      context_length: 1024
+      d_model: 768
+      transformer:
+        n_layers: 5
+- source_run_hashes:
+  - f891c95af8d843ff93306516
+  config:
+    metadata:
+      run_name: context_length_1024-d_model_768-transformer_n_layers_6
+    model:
+      context_length: 1024
+      d_model: 768
+      transformer:
+        n_layers: 6
+- source_run_hashes:
+  - 385177a0cf42499b8a4a0051
+  config:
+    metadata:
+      run_name: context_length_128-d_model_128-transformer_n_layers_2
+    model:
+      context_length: 128
+      d_model: 128
+      transformer:
+        n_layers: 2
+- source_run_hashes:
+  - 5887d71931c04f89af8f2f74
+  config:
+    metadata:
+      run_name: context_length_128-d_model_128-transformer_n_layers_3
+    model:
+      context_length: 128
+      d_model: 128
+      transformer:
+        n_layers: 3
+- source_run_hashes:
+  - e99b5a2f25c14941ba187ef7
+  config:
+    metadata:
+      run_name: context_length_128-d_model_128-transformer_n_layers_4
+    model:
+      context_length: 128
+      d_model: 128
+      transformer:
+        n_layers: 4
+- source_run_hashes:
+  - 2eda31fcc0e64af78792d2ee
+  config:
+    metadata:
+      run_name: context_length_128-d_model_128-transformer_n_layers_5
+    model:
+      context_length: 128
+      d_model: 128
+      transformer:
+        n_layers: 5
+- source_run_hashes:
+  - 057c6c571ca2484399d93ecd
+  config:
+    metadata:
+      run_name: context_length_128-d_model_128-transformer_n_layers_6
+    model:
+      context_length: 128
+      d_model: 128
+      transformer:
+        n_layers: 6
+- source_run_hashes:
+  - b9a47a74a160407bbc40938e
+  config:
+    metadata:
+      run_name: context_length_128-d_model_256-transformer_n_layers_2
+    model:
+      context_length: 128
+      d_model: 256
+      transformer:
+        n_layers: 2
+- source_run_hashes:
+  - b10bf13d03e0459a96025923
+  config:
+    metadata:
+      run_name: context_length_128-d_model_256-transformer_n_layers_3
+    model:
+      context_length: 128
+      d_model: 256
+      transformer:
+        n_layers: 3
+- source_run_hashes:
+  - 78fa8e913f2549a58da8d136
+  config:
+    metadata:
+      run_name: context_length_128-d_model_256-transformer_n_layers_4
+    model:
+      context_length: 128
+      d_model: 256
+      transformer:
+        n_layers: 4
+- source_run_hashes:
+  - 3e473dab02b64f229ccc1c6d
+  config:
+    metadata:
+      run_name: context_length_128-d_model_256-transformer_n_layers_5
+    model:
+      context_length: 128
+      d_model: 256
+      transformer:
+        n_layers: 5
+- source_run_hashes:
+  - ae81bf6a64ef4226b36fc958
+  config:
+    metadata:
+      run_name: context_length_128-d_model_256-transformer_n_layers_6
+    model:
+      context_length: 128
+      d_model: 256
+      transformer:
+        n_layers: 6
+- source_run_hashes:
+  - eab97b83ae6f43dbabb3a9f2
+  config:
+    metadata:
+      run_name: context_length_128-d_model_512-transformer_n_layers_2
+    model:
+      context_length: 128
+      d_model: 512
+      transformer:
+        n_layers: 2
+- source_run_hashes:
+  - c8ef6a3b2bcb4575b208d7e9
+  config:
+    metadata:
+      run_name: context_length_128-d_model_512-transformer_n_layers_3
+    model:
+      context_length: 128
+      d_model: 512
+      transformer:
+        n_layers: 3
+- source_run_hashes:
+  - c6afead35e21414fa24a8e89
+  config:
+    metadata:
+      run_name: context_length_128-d_model_512-transformer_n_layers_4
+    model:
+      context_length: 128
+      d_model: 512
+      transformer:
+        n_layers: 4
+- source_run_hashes:
+  - bf7e3ce5b64748078f9f1335
+  config:
+    metadata:
+      run_name: context_length_128-d_model_512-transformer_n_layers_5
+    model:
+      context_length: 128
+      d_model: 512
+      transformer:
+        n_layers: 5
+- source_run_hashes:
+  - d6d8e421fd2f4148bcd9416b
+  config:
+    metadata:
+      run_name: context_length_128-d_model_512-transformer_n_layers_6
+    model:
+      context_length: 128
+      d_model: 512
+      transformer:
+        n_layers: 6
+- source_run_hashes:
+  - 913d2bc0f99b4433aaaa642c
+  config:
+    metadata:
+      run_name: context_length_128-d_model_768-transformer_n_layers_2
+    model:
+      context_length: 128
+      d_model: 768
+      transformer:
+        n_layers: 2
+- source_run_hashes:
+  - dd348f6bbc3d4d2f9e10ba41
+  config:
+    metadata:
+      run_name: context_length_128-d_model_768-transformer_n_layers_3
+    model:
+      context_length: 128
+      d_model: 768
+      transformer:
+        n_layers: 3
+- source_run_hashes:
+  - 2c1abfdeb23f451babbe9a5d
+  config:
+    metadata:
+      run_name: context_length_128-d_model_768-transformer_n_layers_4
+    model:
+      context_length: 128
+      d_model: 768
+      transformer:
+        n_layers: 4
+- source_run_hashes:
+  - 6053102c13d1475ea6f1c584
+  config:
+    metadata:
+      run_name: context_length_128-d_model_768-transformer_n_layers_5
+    model:
+      context_length: 128
+      d_model: 768
+      transformer:
+        n_layers: 5
+- source_run_hashes:
+  - c41fbae235244abab1cc5fa2
+  config:
+    metadata:
+      run_name: context_length_128-d_model_768-transformer_n_layers_6
+    model:
+      context_length: 128
+      d_model: 768
+      transformer:
+        n_layers: 6
+- source_run_hashes:
+  - 23f88850e7a14b3397e0a2df
+  config:
+    metadata:
+      run_name: context_length_2048-d_model_128-transformer_n_layers_2
+    model:
+      context_length: 2048
+      d_model: 128
+      transformer:
+        n_layers: 2
+- source_run_hashes:
+  - 467c59977d8b4e3987e1b5e1
+  config:
+    metadata:
+      run_name: context_length_2048-d_model_128-transformer_n_layers_3
+    model:
+      context_length: 2048
+      d_model: 128
+      transformer:
+        n_layers: 3
+- source_run_hashes:
+  - 9c28f9dddad9496fbf4ea1a2
+  config:
+    metadata:
+      run_name: context_length_2048-d_model_128-transformer_n_layers_4
+    model:
+      context_length: 2048
+      d_model: 128
+      transformer:
+        n_layers: 4
+- source_run_hashes:
+  - cf935322dcd546dfb45d8465
+  config:
+    metadata:
+      run_name: context_length_2048-d_model_128-transformer_n_layers_5
+    model:
+      context_length: 2048
+      d_model: 128
+      transformer:
+        n_layers: 5
+- source_run_hashes:
+  - 2c83592c771245c49aea20f9
+  config:
+    metadata:
+      run_name: context_length_2048-d_model_128-transformer_n_layers_6
+    model:
+      context_length: 2048
+      d_model: 128
+      transformer:
+        n_layers: 6
+- source_run_hashes:
+  - 3dc47a1ab34b48bab64672ae
+  config:
+    metadata:
+      run_name: context_length_2048-d_model_256-transformer_n_layers_2
+    model:
+      context_length: 2048
+      d_model: 256
+      transformer:
+        n_layers: 2
+- source_run_hashes:
+  - 89bd5885fe6a43a5bf056832
+  config:
+    metadata:
+      run_name: context_length_2048-d_model_256-transformer_n_layers_3
+    model:
+      context_length: 2048
+      d_model: 256
+      transformer:
+        n_layers: 3
+- source_run_hashes:
+  - 47ed543e6e894e30add66c7d
+  config:
+    metadata:
+      run_name: context_length_2048-d_model_256-transformer_n_layers_4
+    model:
+      context_length: 2048
+      d_model: 256
+      transformer:
+        n_layers: 4
+- source_run_hashes:
+  - c9d4e176570541e0bef14a77
+  config:
+    metadata:
+      run_name: context_length_2048-d_model_256-transformer_n_layers_5
+    model:
+      context_length: 2048
+      d_model: 256
+      transformer:
+        n_layers: 5
+- source_run_hashes:
+  - b0ca89481c984dcf9b3da1e6
+  config:
+    metadata:
+      run_name: context_length_2048-d_model_256-transformer_n_layers_6
+    model:
+      context_length: 2048
+      d_model: 256
+      transformer:
+        n_layers: 6
+- source_run_hashes:
+  - ac44c1acc9d64e4f9e287a02
+  config:
+    metadata:
+      run_name: context_length_2048-d_model_512-transformer_n_layers_2
+    model:
+      context_length: 2048
+      d_model: 512
+      transformer:
+        n_layers: 2
+- source_run_hashes:
+  - 80d194309540434c96a48116
+  config:
+    metadata:
+      run_name: context_length_2048-d_model_512-transformer_n_layers_3
+    model:
+      context_length: 2048
+      d_model: 512
+      transformer:
+        n_layers: 3
+- source_run_hashes:
+  - 76138ee79ba04a028e191ab8
+  config:
+    metadata:
+      run_name: context_length_2048-d_model_512-transformer_n_layers_4
+    model:
+      context_length: 2048
+      d_model: 512
+      transformer:
+        n_layers: 4
+- source_run_hashes:
+  - 65a9e01106a94fe39325269a
+  config:
+    metadata:
+      run_name: context_length_2048-d_model_512-transformer_n_layers_5
+    model:
+      context_length: 2048
+      d_model: 512
+      transformer:
+        n_layers: 5
+- source_run_hashes:
+  - 542f18701c25473082e46da9
+  config:
+    metadata:
+      run_name: context_length_2048-d_model_512-transformer_n_layers_6
+    model:
+      context_length: 2048
+      d_model: 512
+      transformer:
+        n_layers: 6
+- source_run_hashes:
+  - ea232a2537f047a08e78e4eb
+  config:
+    metadata:
+      run_name: context_length_2048-d_model_768-transformer_n_layers_2
+    model:
+      context_length: 2048
+      d_model: 768
+      transformer:
+        n_layers: 2
+- source_run_hashes:
+  - a2fe14688d7a48a68c5641c1
+  config:
+    metadata:
+      run_name: context_length_2048-d_model_768-transformer_n_layers_3
+    model:
+      context_length: 2048
+      d_model: 768
+      transformer:
+        n_layers: 3
+- source_run_hashes:
+  - 41f0a89a166c4a01bd0fa5d0
+  config:
+    metadata:
+      run_name: context_length_2048-d_model_768-transformer_n_layers_4
+    model:
+      context_length: 2048
+      d_model: 768
+      transformer:
+        n_layers: 4
+- source_run_hashes:
+  - b64d83da5bbd40db8ddba658
+  config:
+    metadata:
+      run_name: context_length_2048-d_model_768-transformer_n_layers_5
+    model:
+      context_length: 2048
+      d_model: 768
+      transformer:
+        n_layers: 5
+- source_run_hashes:
+  - f68fc269523d486a9dfa1c14
+  config:
+    metadata:
+      run_name: context_length_2048-d_model_768-transformer_n_layers_6
+    model:
+      context_length: 2048
+      d_model: 768
+      transformer:
+        n_layers: 6
+- source_run_hashes:
+  - 8c8161b49ff947e68b60abbe
+  config:
+    metadata:
+      run_name: context_length_256-d_model_128-transformer_n_layers_2
+    model:
+      context_length: 256
+      d_model: 128
+      transformer:
+        n_layers: 2
+- source_run_hashes:
+  - dfa35151af1b4e1ab7544288
+  config:
+    metadata:
+      run_name: context_length_256-d_model_128-transformer_n_layers_3
+    model:
+      context_length: 256
+      d_model: 128
+      transformer:
+        n_layers: 3
+- source_run_hashes:
+  - e07accaea9a94fe38bcfcd1b
+  config:
+    metadata:
+      run_name: context_length_256-d_model_128-transformer_n_layers_4
+    model:
+      context_length: 256
+      d_model: 128
+      transformer:
+        n_layers: 4
+- source_run_hashes:
+  - 43925596ede343b7b919a9fd
+  config:
+    metadata:
+      run_name: context_length_256-d_model_128-transformer_n_layers_5
+    model:
+      context_length: 256
+      d_model: 128
+      transformer:
+        n_layers: 5
+- source_run_hashes:
+  - b99552a223dc4c85b71a8af2
+  config:
+    metadata:
+      run_name: context_length_256-d_model_128-transformer_n_layers_6
+    model:
+      context_length: 256
+      d_model: 128
+      transformer:
+        n_layers: 6
+- source_run_hashes:
+  - e69496f8fe1343ceb703f7d6
+  config:
+    metadata:
+      run_name: context_length_256-d_model_256-transformer_n_layers_2
+    model:
+      context_length: 256
+      d_model: 256
+      transformer:
+        n_layers: 2
+- source_run_hashes:
+  - 04d4aa9abc494d9183194f2b
+  config:
+    metadata:
+      run_name: context_length_256-d_model_256-transformer_n_layers_3
+    model:
+      context_length: 256
+      d_model: 256
+      transformer:
+        n_layers: 3
+- source_run_hashes:
+  - d59a417687a841ef88606f7e
+  config:
+    metadata:
+      run_name: context_length_256-d_model_256-transformer_n_layers_4
+    model:
+      context_length: 256
+      d_model: 256
+      transformer:
+        n_layers: 4
+- source_run_hashes:
+  - 9eeeadbcdb864b75bab5ab1f
+  config:
+    metadata:
+      run_name: context_length_256-d_model_256-transformer_n_layers_5
+    model:
+      context_length: 256
+      d_model: 256
+      transformer:
+        n_layers: 5
+- source_run_hashes:
+  - 55eaba7623e74784a19cdba1
+  config:
+    metadata:
+      run_name: context_length_256-d_model_256-transformer_n_layers_6
+    model:
+      context_length: 256
+      d_model: 256
+      transformer:
+        n_layers: 6
+- source_run_hashes:
+  - 3933c6877d09435685a801ab
+  config:
+    metadata:
+      run_name: context_length_256-d_model_512-transformer_n_layers_2
+    model:
+      context_length: 256
+      d_model: 512
+      transformer:
+        n_layers: 2
+- source_run_hashes:
+  - 7cea381ac1c24f24a20af0be
+  config:
+    metadata:
+      run_name: context_length_256-d_model_512-transformer_n_layers_3
+    model:
+      context_length: 256
+      d_model: 512
+      transformer:
+        n_layers: 3
+- source_run_hashes:
+  - d4ae0894912749c28ce563ce
+  config:
+    metadata:
+      run_name: context_length_256-d_model_512-transformer_n_layers_4
+    model:
+      context_length: 256
+      d_model: 512
+      transformer:
+        n_layers: 4
+- source_run_hashes:
+  - b2ed7d63a29347ac82a5bc83
+  config:
+    metadata:
+      run_name: context_length_256-d_model_512-transformer_n_layers_5
+    model:
+      context_length: 256
+      d_model: 512
+      transformer:
+        n_layers: 5
+- source_run_hashes:
+  - ac89b3de78ad4e68a3457332
+  config:
+    metadata:
+      run_name: context_length_256-d_model_512-transformer_n_layers_6
+    model:
+      context_length: 256
+      d_model: 512
+      transformer:
+        n_layers: 6
+- source_run_hashes:
+  - 39703fd1c09f45ad8b41819c
+  config:
+    metadata:
+      run_name: context_length_256-d_model_768-transformer_n_layers_2
+    model:
+      context_length: 256
+      d_model: 768
+      transformer:
+        n_layers: 2
+- source_run_hashes:
+  - 9799aa39d45649caa86a71e2
+  config:
+    metadata:
+      run_name: context_length_256-d_model_768-transformer_n_layers_3
+    model:
+      context_length: 256
+      d_model: 768
+      transformer:
+        n_layers: 3
+- source_run_hashes:
+  - 7b058bb31b774e2385e504ec
+  config:
+    metadata:
+      run_name: context_length_256-d_model_768-transformer_n_layers_4
+    model:
+      context_length: 256
+      d_model: 768
+      transformer:
+        n_layers: 4
+- source_run_hashes:
+  - 2714f4f5bbfd4efcbc0d3a8b
+  config:
+    metadata:
+      run_name: context_length_256-d_model_768-transformer_n_layers_5
+    model:
+      context_length: 256
+      d_model: 768
+      transformer:
+        n_layers: 5
+- source_run_hashes:
+  - d24ef980b67e40b29be540bd
+  config:
+    metadata:
+      run_name: context_length_256-d_model_768-transformer_n_layers_6
+    model:
+      context_length: 256
+      d_model: 768
+      transformer:
+        n_layers: 6
+- source_run_hashes:
+  - 88268446f0b64667bbe873ec
+  config:
+    metadata:
+      run_name: context_length_512-d_model_128-transformer_n_layers_2
+    model:
+      context_length: 512
+      d_model: 128
+      transformer:
+        n_layers: 2
+- source_run_hashes:
+  - 3a5d801d99474765a54fc46c
+  config:
+    metadata:
+      run_name: context_length_512-d_model_128-transformer_n_layers_3
+    model:
+      context_length: 512
+      d_model: 128
+      transformer:
+        n_layers: 3
+- source_run_hashes:
+  - b8224321e61a4a72ab65587f
+  config:
+    metadata:
+      run_name: context_length_512-d_model_128-transformer_n_layers_4
+    model:
+      context_length: 512
+      d_model: 128
+      transformer:
+        n_layers: 4
+- source_run_hashes:
+  - 84381c023d1f4a4ba9648365
+  config:
+    metadata:
+      run_name: context_length_512-d_model_128-transformer_n_layers_5
+    model:
+      context_length: 512
+      d_model: 128
+      transformer:
+        n_layers: 5
+- source_run_hashes:
+  - 32f6aefac1d04a63a3b41591
+  config:
+    metadata:
+      run_name: context_length_512-d_model_128-transformer_n_layers_6
+    model:
+      context_length: 512
+      d_model: 128
+      transformer:
+        n_layers: 6
+- source_run_hashes:
+  - 99bc51a8129a4f03b8bf887b
+  config:
+    metadata:
+      run_name: context_length_512-d_model_256-transformer_n_layers_2
+    model:
+      context_length: 512
+      d_model: 256
+      transformer:
+        n_layers: 2
+- source_run_hashes:
+  - 2a3549006ee3432f847e1fe4
+  config:
+    metadata:
+      run_name: context_length_512-d_model_256-transformer_n_layers_3
+    model:
+      context_length: 512
+      d_model: 256
+      transformer:
+        n_layers: 3
+- source_run_hashes:
+  - 507982fe2ecb4f0bb04918af
+  config:
+    metadata:
+      run_name: context_length_512-d_model_256-transformer_n_layers_4
+    model:
+      context_length: 512
+      d_model: 256
+      transformer:
+        n_layers: 4
+- source_run_hashes:
+  - 44b74c1c70174593ae1bb7f1
+  config:
+    metadata:
+      run_name: context_length_512-d_model_256-transformer_n_layers_5
+    model:
+      context_length: 512
+      d_model: 256
+      transformer:
+        n_layers: 5
+- source_run_hashes:
+  - 6d9481a1390d4998a125f9bd
+  config:
+    metadata:
+      run_name: context_length_512-d_model_256-transformer_n_layers_6
+    model:
+      context_length: 512
+      d_model: 256
+      transformer:
+        n_layers: 6
+- source_run_hashes:
+  - cb4140f366e0444f9c2bc0f8
+  config:
+    metadata:
+      run_name: context_length_512-d_model_512-transformer_n_layers_2
+    model:
+      context_length: 512
+      d_model: 512
+      transformer:
+        n_layers: 2
+- source_run_hashes:
+  - 0b147d50b0744582993382e5
+  config:
+    metadata:
+      run_name: context_length_512-d_model_512-transformer_n_layers_3
+    model:
+      context_length: 512
+      d_model: 512
+      transformer:
+        n_layers: 3
+- source_run_hashes:
+  - e187f564270148ef89bec098
+  config:
+    metadata:
+      run_name: context_length_512-d_model_512-transformer_n_layers_4
+    model:
+      context_length: 512
+      d_model: 512
+      transformer:
+        n_layers: 4
+- source_run_hashes:
+  - c361ea0c56354132bcd65fd4
+  config:
+    metadata:
+      run_name: context_length_512-d_model_512-transformer_n_layers_5
+    model:
+      context_length: 512
+      d_model: 512
+      transformer:
+        n_layers: 5
+- source_run_hashes:
+  - 7a19a598ed394f0eb9acff54
+  config:
+    metadata:
+      run_name: context_length_512-d_model_512-transformer_n_layers_6
+    model:
+      context_length: 512
+      d_model: 512
+      transformer:
+        n_layers: 6
+- source_run_hashes:
+  - 3de48de4ba504c5c89951846
+  config:
+    metadata:
+      run_name: context_length_512-d_model_768-transformer_n_layers_2
+    model:
+      context_length: 512
+      d_model: 768
+      transformer:
+        n_layers: 2
+- source_run_hashes:
+  - 02f094e98b4e47c798a7636b
+  config:
+    metadata:
+      run_name: context_length_512-d_model_768-transformer_n_layers_3
+    model:
+      context_length: 512
+      d_model: 768
+      transformer:
+        n_layers: 3
+- source_run_hashes:
+  - 245bfb44a64b4886b544d47b
+  config:
+    metadata:
+      run_name: context_length_512-d_model_768-transformer_n_layers_4
+    model:
+      context_length: 512
+      d_model: 768
+      transformer:
+        n_layers: 4
+- source_run_hashes:
+  - 89740ea2446c4e8488ad7aa9
+  config:
+    metadata:
+      run_name: context_length_512-d_model_768-transformer_n_layers_5
+    model:
+      context_length: 512
+      d_model: 768
+      transformer:
+        n_layers: 5
+- source_run_hashes:
+  - 720a8f34557e4402bfca0dc7
+  config:
+    metadata:
+      run_name: context_length_512-d_model_768-transformer_n_layers_6
+    model:
+      context_length: 512
+      d_model: 768
+      transformer:
+        n_layers: 6

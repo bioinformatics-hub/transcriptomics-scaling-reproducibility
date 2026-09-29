@@ -1,0 +1,62 @@
+metadata:
+  run_name: test_forward_flops
+  pipeline: [default, geneformer]
+
+paths:
+  path_to_aimrepo: "test/data/aim-repo"
+  path_to_census: "test/data/census_test"
+  path_to_hvg: "test/data/csvs/census_test_hvg.csv"
+  path_to_means: "test/data/csvs/census_test_means.csv"
+  path_to_celltypes: "test/data/csvs/census_test_celltypes.csv"
+  path_to_ckpt_dir:
+  path_to_ckpt_file: 
+  path_to_finetune_dir:
+  path_to_genecorpus_dir: 
+  path_to_tokenized_text_dir: 
+  path_to_tokenizer: 
+
+model:
+  model_class: transformer
+  total_genes: 61888
+  context_length: 10
+  d_model: 16
+  dropout: 0.2
+  freeze_encoder: false
+  lr: !!float 3e-4
+  from_ckpt: false
+  transformer:
+    n_layers: 2
+    n_heads: 2
+    gating: false
+    norm_first: true
+  bioformer:
+    n_layers: 2
+    n_heads: 2
+    d_opm: 16
+    d_z: 16
+    pair_updates: true
+    chunk_size: 200
+    gating: false
+    norm_first: true
+
+datamodule:
+  obs_value_filter: "is_primary_data == True"
+  labels: none
+  normalize_expr_for_ranking: true
+  selection: active
+  n_bins: 10
+  mask_strategy: uniform
+  mask_pct: 0.10
+  batch_size: 2
+  max_val_samples: 1000
+
+trainer:
+  checkpoint: false
+  compute_spearman: false
+  find_lr: false
+  val_check_interval: 1.0
+  checkpoint_steps: 100
+  n_epochs: 1
+  n_steps: 10
+  accumulate_grad: 1
+  lr_scheduler: constant
